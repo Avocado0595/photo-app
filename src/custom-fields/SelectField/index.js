@@ -8,7 +8,7 @@ SelectField.propTypes = {
 
     label: PropTypes.string,
     placeholder: PropTypes.string,
-    disabled: PropTypes.array,
+    disabled: PropTypes.bool,
 };
 
 SelectField.defaultProps={
@@ -19,7 +19,7 @@ SelectField.defaultProps={
 }
 
 function SelectField(props) {
-    const {field, form,options,label, title,placeholder ,disabled} = props;
+    const {field,options,label, placeholder ,disabled} = props;
     const {name, value} = field;
     const selectedOption = options.find(option=>option.value === value);
     const handleSelectOptionChange = (selectOption)=>{

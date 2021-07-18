@@ -1,29 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Label, Input, Button } from 'reactstrap';
-import Select from 'react-select';
+import { FormGroup, Button } from 'reactstrap';
 import photoCategory from 'constants/photoCategory';
-
-import Images from 'constants/images';
 import { Formik, Form, FastField } from 'formik';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
+import RandomPhotoField from 'custom-fields/RandomPhotoField';
 
 PhotoForm.propTypes = {
-    
+    title: PropTypes.string,
+    categoryId: PropTypes.string,
+    photo: PropTypes.string
 };
 
 function PhotoForm(props) {
     const initValue = {
         title:'',
         categoryId:null,
+        photo:''
     }
     return (
-        <Formik initialValues={initValue}>
+        <Formik initialValues={initValue}
+            onSubmit={(values)=> console.log(values)}
+        >
             {
                 formikProps =>{
-                    const {values, errors, touched} = formikProps;
-                    console.log({values});
                     return (
                         <Form>
                             <FastField
@@ -42,17 +43,13 @@ function PhotoForm(props) {
                                 placeholder="Choose your category..."
                                 options = {photoCategory}
                             />
-
+                            <FastField
+                                name="photo"
+                                component={RandomPhotoField}
+                                label="Photo"
+                            />
                             <FormGroup>
-                                <Label for="photo">Photo</Label>
-                                <div><Button type="button" outline color="primary">Random a photo</Button>
-                                    <div>
-                                        <img width="200px" height="200px" src={Images.banner3} alt='random-photo' />
-                                    </div>
-                                </div>
-                            </FormGroup>
-                            <FormGroup>
-                                <Button color="primary">Add to album</Button>
+                                <Button type="submit" color="primary">Add to album</Button>
                             </FormGroup>
                         </Form>
                     )

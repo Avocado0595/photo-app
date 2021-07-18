@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, Label, Input } from 'reactstrap';
-import Select from 'react-select';
 
 InputField.propTypes = {
     field: PropTypes.object.isRequired,
@@ -21,7 +20,7 @@ InputField.defaultProps={
 }
 
 function InputField(props) {
-    const {field, form,type,label, title,placeholder ,disabled} = props;
+    const {field,type,label,placeholder ,disabled} = props;
     const {name, value, onChange, onBlur} = field;
     return (
         <FormGroup>

@@ -2,12 +2,7 @@ import './Header.scss';
 import {Container, Row, Col} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
 import React from 'react';
-import PropTypes from 'prop-types';
 
-Header.propTypes = {
-     
-};
- 
 function Header(props) {
      return (
          <header className="header">
