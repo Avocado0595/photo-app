@@ -6,6 +6,7 @@ import { Formik, Form, FastField } from 'formik';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import RandomPhotoField from 'custom-fields/RandomPhotoField';
+import * as yup from 'yup';
 
 PhotoForm.propTypes = {
     title: PropTypes.string,
@@ -19,9 +20,17 @@ function PhotoForm(props) {
         categoryId:null,
         photo:''
     }
+    const validationSchema = yup.object().shape({
+        title:yup.string().required('This field is required'),
+
+        categoryId: yup.number().required('This field is required').nullable(),
+
+        photo: yup.string().required('This field is required')
+    })
     return (
         <Formik initialValues={initValue}
             onSubmit={(values)=> console.log(values)}
+            validationSchema={validationSchema}
         >
             {
                 formikProps =>{
