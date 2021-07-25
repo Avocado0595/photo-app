@@ -4,13 +4,14 @@
     justify-content: center;
     align-items: center;
     height: 15rem;
-
+    margin-bottom: 20px;
     background-image: url(../../assets/images/banner1.jpg);
     background-position: center;
     background-size: cover;
 
     &__title{
-        color: rgba(255,255,255,0.85);
+        color: rgb(255,255,255);
         font-weight: bold;
+        margin-top: 180px;
     }
 }

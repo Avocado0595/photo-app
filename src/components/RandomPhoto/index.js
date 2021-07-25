@@ -20,7 +20,6 @@ function getRamdomImgUrl(){
 }
 function RandomPhoto(props) {
     const {name, imageUrl, onImgUrlChange, onRandomBtnBlur} = props;
-    console.log(imageUrl);
     const handleRandomPhotoClick = async()=>{
         if (onImgUrlChange){
             const randomImgUrl = getRamdomImgUrl();
@@ -37,7 +36,7 @@ function RandomPhoto(props) {
                 >Random a photo</Button>
             </div>
             <div className="random-photo__img">
-                <img width="200px" height="200px" src={imageUrl===''?'https://picsum.photos/id/19/300/400':imageUrl} alt='Random file not found!!!' />
+                {imageUrl&&<img onError={handleRandomPhotoClick} width="200px" height="200px" src={imageUrl} alt='Random file not found!!!' />}
             </div>
         </div>
     );

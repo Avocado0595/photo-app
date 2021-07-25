@@ -1,18 +1,31 @@
-$primary: rgb(61, 121, 226);
+$primary: #9E9E9E;
+$text-color: #F5F5F5;
 .header{
-    padding: 1rem 0;
-    font-size: 1.25rem;
-    &__title{
-        font-weight: bold;
+    background-color: $primary;
+    padding: 0.5rem 0;
+    font-size: 1.55rem;
+    .header__logo{
+        width: 8%;
+        color: $text-color !important;
     }
     &__link{
-        color: #000;
+        font-weight: bold;
+        color: $text-color !important;
+        
         transition: all 0.25s ease-in-out 0s;
         &--active,
         &:hover{
-        text-decoration: none;
-        color: $primary;
+            text-decoration: none;
+            color: $primary;
+        }
     }
+    .header__add-photo{
+        color: white;
+        font-style: italic;
+        margin-right: 10px;
+    }
+    .header__logo--add{
+        width: 5%;
     }
     
 }
