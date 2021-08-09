@@ -1,31 +1,49 @@
 import './Header.scss';
-import {Container, Row, Col} from 'reactstrap';
+import {Container, Row, Col, Navbar, NavbarBrand,InputGroup,
+    Input, InputGroupAddon, InputGroupText, NavbarToggler, Collapse,
+    NavItem, Nav, NavbarText
+ } from 'reactstrap';
 import {NavLink, Link} from 'react-router-dom';
-import React from 'react';
+import React, {useState} from 'react';
 import Images from 'constants/images';
 
-function Header(props) {
+function Header() {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen);
      return (
-         <header className="header">
-             <Container fluid>
-                 <Row className="justify-content-between">
-                 <Col xs="auto">
-                         <NavLink 
-                         exact
-                         className="header__link"
-                         to="/photos"
-                         activeClassName="header__link--active"
-                         >
-                            <img className="header__logo" src={Images.logo}/> PHOTO GALLERY
-                         </NavLink>
-                     </Col>
-                     <Col xs="auto">
-                     <Link className="header__add-photo" to='/photos/add'> Add new photo <img className="header__logo--add" src={Images.add}/></Link>
-                     </Col>                
-                 </Row>
-             </Container>
-         </header>
+         <Container fluid className="header">
+             <Navbar color="light" light expand="md">
+                 <NavbarBrand href="/photos"><img alt="logo" className="header__logo" src={Images.logo}/> Photo Gallery</NavbarBrand>
+                 <div className="nav-search">
+                 <input className="nav-search__input bg-light" type="text" placeholder="Search your favorite photo..." />
+                    <button className="nav-search__btn bg-light"><img alt="search" className="nav-search__btn--icon" src={Images.searchIcon}/></button>
+                 </div>
+                 <NavbarToggler onClick={toggle} />
+                 <Collapse isOpen={isOpen} navbar>
+                     <Nav className="nav-model">
+                         <NavItem>
+                             <NavLink to="/">Login</NavLink>
+                         </NavItem>
+                         <NavItem>
+                             <NavLink to="/">Sign up</NavLink>
+                         </NavItem>
+                         <NavItem>
+                             <NavLink to="/">About</NavLink>
+                         </NavItem>
+                         <NavItem>
+                             <NavLink to="/">Contact</NavLink>
+                         </NavItem>
+                     </Nav>
+                 </Collapse>
+             </Navbar>
+         </Container>
      );
 }
  
 export default Header;
+{/* <InputGroup>
+                     <Input className="nav-search" placeholder="Search your style..."/>
+                     <InputGroupAddon addonType="append">
+                         <InputGroupText >Search</InputGroupText>
+                     </InputGroupAddon>
+                 </InputGroup> */}

@@ -1,49 +1,75 @@
 
     .photo-card {
-       
-        border-radius: 4px;
+        &:hover .photo-card__modal, &:hover .modal-group{
+            visibility: visible;
+        }
         position: relative;
-        margin-bottom: 40px;
-        &:hover .photo-card__modal{
-            visibility: visible;     
-        }
-        .photo-card__img-layout{
-            .photo-card__img{
-                height: 85%;
-            }
-        }
         
-        .photo-card__modal{
-            position: absolute;
+    }
+
+    .photo-card__modal{
+        height: 100%;
+        width: 97.5%;
+        position: absolute;
+        visibility: hidden;
+        bottom: 0%;
+        left:1%;
+        background-image: linear-gradient( rgba(39, 39, 39, 0.248),transparent,transparent,rgba(55,54,54,0.2));
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 8px 12px;       
+    }
+
+    .modal-group{
+        z-index: 1;
+        visibility: hidden;
+        position: absolute;
+        right:10px;
+        text-align: right;
+        &.author{
+            text-align: left;
+            bottom: 10px;
+            left: 10px;
+        }
+    .control__btn{       
+        &--img{
+            width: 20px;
+        }      
+        background: white;
+        opacity: 0.8;
+        color: #333;
+        border: none;
+        margin: 8px 4px;
+        width: 35px;
+        height: 35px;
+        border-radius: 2px;
+        text-align: center;
+        &:hover{
+            opacity: 1;
+        }
+    }
+}
+
+
+@media(max-width: 769px){
+    .photo-card{
+        display: flex;
+        flex-flow: column-reverse;
+        &:hover .photo-card__modal{
             visibility: hidden;
-            width: 100%;
-            height: 100%;
-            bottom: 0%;
-            background-image: linear-gradient(to bottom,  rgba(255,255,255,0.1),rgba(55,54,54,0.2));
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            .photo-card__title{
-                color: #d4e8eb;
-            }
-            .control__btn{                       
-                background: white;
-                opacity: 0.8;
-                color: #333;
-                border: none;
-                margin: 8px 4px;
-                width: 100px;
-                height: 30px;
-                border-radius: 2px;
-                &:hover{
-                    opacity: 1;
-                }
-                &.edit{
-                   
-                }
-                &.remove{
-    
-                }
+        }
+        .control__btn{
+            border: solid 1px rgba(51, 51, 51, 0.503);
+        }
+        .modal-group{
+            position:unset;
+            visibility: visible;
+            margin-left: auto;
+            &.author{
+                margin-right: auto !important;
+                margin-left: 4px;
             }
         }
     }
+}

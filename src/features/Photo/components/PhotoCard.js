@@ -1,11 +1,10 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-
+import Images from 'constants/images';
+import React, { useState } from 'react';
 import './PhotoCard.scss';
 
 
-
 function PhotoCard(props) {
+    const [showPhotoModel, setShowPhotoModel] = useState(false);
     const {photo, handleEditPhoto, handleRemovePhoto} = props;
     const {imgUrl, title, id} = photo;
     const onEditClick = ()=>{
@@ -15,21 +14,38 @@ function PhotoCard(props) {
         if (handleRemovePhoto) handleRemovePhoto(photo);
     }
     return (
-        <div key={id} className="photo-card col-md-4 col-sm-6 col-xs-6">
-            <div className="photo-card__img-layout" >
-                <img className="photo-card__img" src={imgUrl} alt={title}/>
-            </div>
-           
-            <div className="photo-card__modal">
-                <div className="photo-card__modal__title"><h4 className="photo-card__title">{title}</h4></div>
-                <div className="photo-card__modal__control">
-                    <button onClick={onEditClick} className="control__btn edit">Edit</button>
-                    <button onClick={onRemoveClick} className="control__btn remove">Remove</button>
+         
+        <div className="row">
+            <div className="col-md-12 px-0">
+                <div className="photo-card rounded-lg overflow-hidden">
+                <div className="modal-group">
+                            <button className="control__btn"><img className="control__btn--img" src={Images.like} /></button>
+                            <button className="control__btn"><img className="control__btn--img" src={Images.plus} /></button>
+                        </div>
+                    <img src={imgUrl} className="img-fluid " alt='alt'></img>
+                    <div className="modal-group author">
+                            <a href="/">
+                                <img alt="avatar" />
+                                <p>author's name</p>
+
+                            </a>
+                        </div>
+                    <div className="photo-card__modal">
+                        
+                       
+                    </div>
                 </div>
-                
             </div>
         </div>
+           
+           
+           
+        // </div>
     );
+     // <div key={id} className="photo-card col-md-4 col-sm-6 col-xs-6">
+        //     <div className="photo-card__img-layout" >
+        //         <img className="photo-card__img" src={imgUrl} alt={title}/>
+        //     </div>
 }
 //
 

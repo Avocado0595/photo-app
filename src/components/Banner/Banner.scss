@@ -8,10 +8,18 @@
     background-image: url(../../assets/images/banner1.jpg);
     background-position: center;
     background-size: cover;
-
-    &__title{
-        color: rgb(255,255,255);
+    position: relative;
+    &__text{
+        color: white;
         font-weight: bold;
-        margin-top: 180px;
+        position: absolute;
+        bottom: 0%;
+        left:0%;
+        a{
+            color: rgb(203, 203, 203) !important;
+            &:hover{
+                color: white !important;
+            }
+        }
     }
 }

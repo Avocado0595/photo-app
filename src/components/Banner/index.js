@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Banner.scss';
+import { Link } from 'react-router-dom';
 Banner.propTypes = {
     title: PropTypes.string,
     backgroundUrl: PropTypes.string
@@ -12,14 +13,14 @@ Banner.defaultProps = {
 }
 
 function Banner(props) {
-    const {title, backgroundUrl} = props;
+    const {author, backgroundUrl} = props;
 
     const bannerStyle = backgroundUrl ? {backgroundImage: `url(${backgroundUrl})`}:{}
-    
+    //TODO: add link to author
     return (
-        <section className="banner" style={bannerStyle}>
-            <h1 className="banner__title">{title}</h1>
-        </section>
+        <Link to='/' className="banner" style={bannerStyle}>
+            <p className="banner__text">Photo of the day by <a href="/">{author}</a></p>
+        </Link>
     );
 }
 

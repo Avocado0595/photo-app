@@ -5,10 +5,12 @@ import PhotoList from 'features/Photo/components/PhotoList';
 import { removePhoto } from 'features/Photo/photoSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import Masonry from 'react-masonry-css';
  
 import "./Main.scss";
+import PhotoCard from 'features/Photo/components/PhotoCard';
 Main.protoTypes = {};
 
 function Main(){
@@ -23,12 +25,34 @@ function Main(){
         const action = removePhoto(photo.id);
         dispatch(action);
     }
+//TODO: pass author for banner
 
+const childElements =photos.map((photo) => (
+    <PhotoCard photo={photo} />
+  ));
+  const breakpointColumnsObj = {
+    default: 4,
+    1200: 3,
+    992: 3,
+    768: 2,
+    576: 1,
+  };
     return (
         <div className="photo-main">
-            <Banner title="Collect your favourite photos!" backgroundUrl={Images.pocket_banner}/>
+            <Banner author="unknow" backgroundUrl={Images.pocket_banner}/>
             <Container className="text-center">
-                <PhotoList photoList={photos} handleEditPhoto = {handleEditPhoto} handleRemovePhoto ={handleRemovePhoto}/>
+            <div className="row">
+          <div className="col-md-12">
+            <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="masonry-grid"
+                columnClassName="masonry-grid_column"
+            >
+                {childElements}
+                {/* <PhotoList photoList={photos} handleEditPhoto = {handleEditPhoto} handleRemovePhoto ={handleRemovePhoto}/> */}
+            </Masonry>
+                </div>
+                </div>
             </Container>
         </div>
     )
