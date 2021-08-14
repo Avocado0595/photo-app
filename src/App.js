@@ -5,29 +5,36 @@ import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import NotFound  from './components/NotFound/index';
 import Header from './components/Header';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
-import productApi from 'api/productApi';
-
+import {auth} from './firebase/Firebase';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentUser, signOut } from 'features/User/UserSlice';
+import About from 'features/About/About';
+import Contact from 'features/Contact/Contact';
 //lazy load photo
 const Photo = lazy(()=> import('./features/Photo/index'));
 
 function App() {
-  const [productList, setProductList] = useState([]);
-  useEffect(
-    ()=>{
-      const fetchProductList = async() =>{
-        try{
-          const params = {_page:1, _limit:10};
-        const data = await productApi.getAll(params);
-        console.log(data);
-        }
-        catch(error){
-          console.log('Fetch data failed: ', error);
-        }
-      };
-      fetchProductList();
-    },[]
+  const currentUser = useSelector(state=>state.user);
+  const dispatch =useDispatch();
+  useEffect(()=>{
+    const unSubcribeFromAuth = auth.onAuthStateChanged(async user=>{    
+      if(user){
+        const action = setCurrentUser({displayName:user.displayName, uid: user.uid});
+        const token = await auth.currentUser.getIdToken();
+        localStorage.setItem('firebaseToken',token );
+        dispatch(action);
+      }
+      else{
+        const action = signOut(user);
+        dispatch(action);
+      }
+    }
+      );
+      return ()=>unSubcribeFromAuth();
+  },
+  [dispatch]
   )
-
+  console.log(currentUser);
   return (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
@@ -37,6 +44,8 @@ function App() {
         <Switch>
           <Redirect exact from='/' to='/photos'/>
           <Route path='/photos' component={Photo}/>
+          <Route path='/about' component={About}/>
+          <Route path='/contact' component={Contact}/>
           <Route component={NotFound}/>
           
         </Switch>

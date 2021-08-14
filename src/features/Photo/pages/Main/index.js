@@ -3,7 +3,7 @@ import Banner from 'components/Banner';
 import Images from 'constants/images';
 import PhotoList from 'features/Photo/components/PhotoList';
 import { removePhoto } from 'features/Photo/photoSlice';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Container } from 'reactstrap';
@@ -11,12 +11,27 @@ import Masonry from 'react-masonry-css';
  
 import "./Main.scss";
 import PhotoCard from 'features/Photo/components/PhotoCard';
+import photoApi from 'api/photoApi';
 Main.protoTypes = {};
 
 function Main(){
     const photos = useSelector(state => state.photos);
     const dispatch =useDispatch();
     const history = useHistory();
+
+    useEffect(()=>{
+        const fetchProductList =  async() =>{
+            try{
+              //const params = {_page:1, _limit:10};
+            const data = await photoApi.getAll();
+            console.log(data);
+            }
+            catch(error){
+              console.log('Fetch data failed: ', error);
+            }
+          };
+          fetchProductList();
+    },[])
     const handleEditPhoto = (photo) =>{
         const editUrl = `/photos/${photo.id}`;
         history.push(editUrl);

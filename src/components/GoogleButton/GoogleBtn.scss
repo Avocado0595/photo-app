@@ -1,0 +1,21 @@
+.google-btn{
+    display: flex !important;
+    flex-direction: row;
+    padding: 0px 8px 0px 0px !important;
+    align-items: center;
+.google-btn__layout{
+    border-radius: 4px;
+    background-color: white;
+    padding: 4px;
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+    position: relative;
+    .google-icon{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+}

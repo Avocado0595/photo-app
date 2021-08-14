@@ -1,10 +1,14 @@
 import Images from 'constants/images';
 import React, { useState } from 'react';
 import './PhotoCard.scss';
-
+import {auth} from '../../../firebase/Firebase';
+import SigninModal from 'features/User/component/signin-modal/signinModal';
+import MyModal from 'features/User/component/modal/MyModal';
 
 function PhotoCard(props) {
-    const [showPhotoModel, setShowPhotoModel] = useState(false);
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
     const {photo, handleEditPhoto, handleRemovePhoto} = props;
     const {imgUrl, title, id} = photo;
     const onEditClick = ()=>{
@@ -13,14 +17,21 @@ function PhotoCard(props) {
     const onRemoveClick = ()=>{
         if (handleRemovePhoto) handleRemovePhoto(photo);
     }
+    const handleOnClick = ()=>{
+        if(!auth.currentUser)
+        {
+            setModal(!modal);
+        }
+    }
     return (
          
         <div className="row">
             <div className="col-md-12 px-0">
+                <MyModal toggle={toggle} modal={modal}/>
                 <div className="photo-card rounded-lg overflow-hidden">
                 <div className="modal-group">
-                            <button className="control__btn"><img className="control__btn--img" src={Images.like} /></button>
-                            <button className="control__btn"><img className="control__btn--img" src={Images.plus} /></button>
+                            <button onClick={handleOnClick} className="control__btn"><img className="control__btn--img small-icon" src={Images.like} /></button>
+                            <button onClick={handleOnClick} className="control__btn"><img className="control__btn--img small-icon" src={Images.plus} /></button>
                         </div>
                     <img src={imgUrl} className="img-fluid " alt='alt'></img>
                     <div className="modal-group author">

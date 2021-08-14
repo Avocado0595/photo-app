@@ -1,10 +1,10 @@
 const { default: axiosClient } = require("./axiosClient");
 
-const productApi = {
+const photoApi = {
     getAll: (params)=>{
-        const url = '/products';
+        const url = '/photo';
         return axiosClient.get(url, {params});
     }
 }
 
-export default productApi;
+export default photoApi;

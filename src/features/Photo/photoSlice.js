@@ -24,6 +24,9 @@ const photo = createSlice({
     categoryId:3,
     imgUrl:'https://picsum.photos/id/424/300/400'}],
     reducers:{
+        getPhotos:(state, action)=>{
+            return {...state, ...action.payload};
+        },
         addPhoto: (state, action) =>{
             state.push(action.payload);
         },
@@ -42,6 +45,6 @@ const photo = createSlice({
 });
 
 const {reducer,actions} = photo;
-export const {addPhoto, removePhoto, editPhoto} = actions;
+export const {addPhoto, removePhoto, editPhoto, getPhotos} = actions;
 
 export default reducer;
