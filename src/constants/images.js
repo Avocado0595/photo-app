@@ -9,6 +9,8 @@ import searchIcon from '../assets/images/search-icon.svg';
 import like from '../assets/images/like.svg';
 import plus from '../assets/images/plus.svg';
 import google from '../assets/images/google.svg';
+import edit from '../assets/images/edit.svg';
+import deleteIcon from '../assets/images/delete.svg';
 const Images = {
     banner1 : banner1,
     banner2: banner2,
@@ -20,6 +22,8 @@ const Images = {
     searchIcon: searchIcon,
     like: like,
     plus: plus,
-    google: google
+    google: google,
+    edit: edit,
+    deleteIcon: deleteIcon
 }
 export default Images;

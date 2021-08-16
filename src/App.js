@@ -1,15 +1,16 @@
 
 import './App.css';
-import React, {Suspense, lazy, useState, useEffect} from 'react';
+import React, {Suspense, lazy, useEffect} from 'react';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import NotFound  from './components/NotFound/index';
 import Header from './components/Header';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import {auth} from './firebase/Firebase';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector,  } from 'react-redux';
 import { setCurrentUser, signOut } from 'features/User/UserSlice';
 import About from 'features/About/About';
 import Contact from 'features/Contact/Contact';
+import User from 'features/User/index';
 //lazy load photo
 const Photo = lazy(()=> import('./features/Photo/index'));
 
@@ -35,6 +36,7 @@ function App() {
   [dispatch]
   )
   console.log(currentUser);
+
   return (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
@@ -46,6 +48,7 @@ function App() {
           <Route path='/photos' component={Photo}/>
           <Route path='/about' component={About}/>
           <Route path='/contact' component={Contact}/>
+          <Route path='/:userId' render={()=>{return (currentUser.currentUser? <User/> : <Redirect to="/"/>)}}/>
           <Route component={NotFound}/>
           
         </Switch>

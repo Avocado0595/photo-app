@@ -1,35 +1,47 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, Button, Spinner } from 'reactstrap';
 import photoCategory from 'constants/photoCategory';
 import { Formik, Form, FastField } from 'formik';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
-import RandomPhotoField from 'custom-fields/RandomPhotoField';
+import PhotoField from 'custom-fields/PhotoField';
 import * as yup from 'yup';
 import { useParams } from 'react-router-dom';
+import photoApi from 'api/photoApi';
 import './PhotoForm.scss';
 PhotoForm.propTypes = {
     title: PropTypes.string,
     categoryId: PropTypes.string,
-    imgUrl: PropTypes.string
+    photoUrl: PropTypes.string
 };
 
 function PhotoForm(props) {
-    const {initialValues} = props; 
+    const {initialValues, toggle} = props; 
     const {photoId} = useParams();
     const isAddPhoto = !photoId;
     const validationSchema = yup.object().shape({
         title:yup.string().required('This field is required'),
 
-        categoryId: yup.number().required('This field is required').nullable(),
+        categoryId: yup.string().required('This field is required').nullable(),
 
-        imgUrl: yup.string().required('This field is required')
+        photoUrl: yup.string().required('This field is required')
     })
+    const onSubmit = useCallback(async (values)=>{
+        try{
+            await photoApi.postPhoto(values);
+            console.log(values);
+            toggle();
+        }
+        catch(error){
+            console.log('post data failed: ', error);
+          }
+    }, [toggle]);
+
     return (
         <div className="form-layout">
                <Formik initialValues={initialValues}
-            onSubmit={props.onSubmit}
+            onSubmit={onSubmit}
             validationSchema={validationSchema}
            
         >
@@ -53,8 +65,8 @@ function PhotoForm(props) {
                                 options = {photoCategory}
                             />
                             <FastField 
-                                name="imgUrl"
-                                component={RandomPhotoField}
+                                name="photoUrl"
+                                component={PhotoField}
                                 label="Photo"
                             />
                             <FormGroup>
@@ -72,3 +84,4 @@ function PhotoForm(props) {
 }
 
 export default PhotoForm;
+//

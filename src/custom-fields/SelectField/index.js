@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
+//import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { FormFeedback, FormGroup, Label } from 'reactstrap';
 import { ErrorMessage } from 'formik';
 SelectField.propTypes = {
@@ -39,7 +40,7 @@ function SelectField(props) {
     return (
         <FormGroup>
              {label && <Label for ={name}>{label}</Label>}
-            <Select id={name} {...field}
+            <CreatableSelect id={name} {...field}
             value={selectedOption}
             onChange={handleSelectOptionChange}
             placeholder={placeholder}

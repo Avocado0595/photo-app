@@ -2,7 +2,35 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const photo = createSlice({
     name: 'photo',
-    initialState: [{id:1,title:'Img 1',
+    initialState: {photoList: []},
+    reducers:{
+        getPhotos:(state, action)=>{
+            return {photoList: action.payload};
+        },
+        addPhoto: (state, action) =>{
+            state.photoList.push(action.payload);
+        },
+        removePhoto: (state, action)=>{
+            const photoId = action.payload;
+            return state.photoList.filter((item)=>item.id!==photoId);
+        },
+        editPhoto:(state, action)=>{
+            const editedPhoto = action.payload;
+            const photoIndex = state.photoList.findIndex(photo=> photo.id === editedPhoto.id);
+            if (photoIndex >=0){
+                state.photoList.[photoIndex] = editedPhoto;
+            }
+        }
+    }
+});
+
+const {reducer,actions} = photo;
+export const {addPhoto, removePhoto, editPhoto, getPhotos} = actions;
+
+export default reducer;
+
+/*
+{id:1,title:'Img 1',
     categoryId:1,
     imgUrl:'https://picsum.photos/id/424/300/400'},
     {id:2,title:'Img 2',
@@ -22,29 +50,5 @@ const photo = createSlice({
     imgUrl:'https://picsum.photos/id/424/300/400'},
     {id:7,title:'Img 7',
     categoryId:3,
-    imgUrl:'https://picsum.photos/id/424/300/400'}],
-    reducers:{
-        getPhotos:(state, action)=>{
-            return {...state, ...action.payload};
-        },
-        addPhoto: (state, action) =>{
-            state.push(action.payload);
-        },
-        removePhoto: (state, action)=>{
-            const photoId = action.payload;
-            return state.filter((item)=>item.id!==photoId);
-        },
-        editPhoto:(state, action)=>{
-            const editedPhoto = action.payload;
-            const photoIndex = state.findIndex(photo=> photo.id === editedPhoto.id);
-            if (photoIndex >=0){
-                state[photoIndex] = editedPhoto;
-            }
-        }
-    }
-});
-
-const {reducer,actions} = photo;
-export const {addPhoto, removePhoto, editPhoto, getPhotos} = actions;
-
-export default reducer;
+    imgUrl:'https://picsum.photos/id/424/300/400'}
+*/

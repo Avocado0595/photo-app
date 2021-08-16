@@ -1,9 +1,16 @@
 const { default: axiosClient } = require("./axiosClient");
 
 const photoApi = {
-    getAll: (params)=>{
+    getAll: async (params)=>{
         const url = '/photo';
-        return axiosClient.get(url, {params});
+        const getPhotos = await axiosClient.get(url, {params});
+        if (!getPhotos.err)
+            return getPhotos;
+        return null;
+    },
+    postPhoto: (data)=>{
+        const url = '/photo';
+        axiosClient.post(url,data);
     }
 }
 
