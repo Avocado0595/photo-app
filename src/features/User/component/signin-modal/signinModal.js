@@ -1,19 +1,17 @@
 
-import {useState} from 'react';
-import { Button} from 'reactstrap';
 import MyModal from '../modal/MyModal';
 import './signinModal.scss';
 import Signin from '../Signin';
-
-
-function SigninModal(props) {
-    const {hiddenBtn} = props;
-    const initState = props.modal===true?props.modal:false
-   const [modal, setModal] = useState(initState);
-    const toggle = () => setModal(!modal);
+import { useSelector, useDispatch } from 'react-redux';
+import {signInActions} from 'utils/ModalSlice/SignInModalSlice';
+import { useCallback } from 'react';
+function SigninModal() {
+    const modal = useSelector(state=>state.signInToggle.isOpen);
+    const dispatch = useDispatch();
+    console.log('[header-modal]: ', modal);
+    const close = useCallback(()=> dispatch(signInActions.closeModal()), [dispatch]);
     return (<div>
-        {hiddenBtn??<Button color="primary" onClick={toggle}>Sign In</Button>}
-        <MyModal toggle={toggle} modal={modal} component={<Signin toggleModal = {toggle}/>}/>
+        <MyModal modal={modal} component={<Signin/>} closeModal={close} header="Sign In"/>
         
     </div>
     );

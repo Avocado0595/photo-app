@@ -1,19 +1,23 @@
 import './Header.scss';
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Nav } from 'reactstrap';
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Nav, Button } from 'reactstrap';
 import { NavLink, useHistory } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Images from 'constants/images';
 import SigninModal from 'features/User/component/signin-modal/signinModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '../../firebase/Firebase';
 import SignupModal from 'features/User/component/signup-modal/signUpModal';
+import {signInActions} from '../../utils/ModalSlice/SignInModalSlice';
+import {signUpActions} from '../../utils/ModalSlice/SignUpModalSlice';
 
 function Header() {
     const history = useHistory();
+    const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
+    const openSigninModalBtn = useCallback(()=>dispatch(signInActions.openModal()), [dispatch]);
+    const openSignupModalBtn = useCallback(()=>dispatch(signUpActions.openModal()), [dispatch]);
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
-
     return (
         <Navbar color="light" light expand="lg" sticky="top">
             <NavbarBrand href="/photos"><img alt="logo" className="header__logo" src={Images.logo} /> <p className="header__text">Photo Gallery</p></NavbarBrand>
@@ -47,10 +51,12 @@ function Header() {
                             :
                             <>
                                 <NavItem>
-                                    <SignupModal/>
+                                <Button outline color="success" onClick={openSignupModalBtn}>Sign Up</Button>
+                                <SignupModal/>
                                 </NavItem>
                                 <NavItem>
-                                    <SigninModal />
+                                <Button color="primary" onClick={openSigninModalBtn}>Sign In</Button>
+                                <SigninModal/>
                                 </NavItem>
                             </>
                     }

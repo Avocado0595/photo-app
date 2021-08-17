@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {auth} from '../../../firebase/Firebase';
 import { Formik, Form, FastField } from 'formik';
 import { FormGroup, Button, Spinner } from 'reactstrap';
@@ -7,8 +7,7 @@ import InputField from 'custom-fields/InputField';
 import './Signin.scss';
 
 
-function Signup(props) {
-    const {toggleModal} = props;
+function Signup() {
     const validationSchema = yup.object().shape({
         email:yup.string().required('This field is required').email(),
         password: yup.string().required('This field is required').min(6,'Password at least 6 character')
@@ -21,18 +20,15 @@ function Signup(props) {
         password:'',
         confirmPassword:''
     }
-    const [account, setAccount] = useState(initialValues);
    
     const handleSubmit = async(values)=>{
         const {email, password, confirmPassword} = values;
         if (password !== confirmPassword){
-            alert("password don't match");
+            alert("Confirm password don't match");
             return;
         }
-        
         try{
             await auth.createUserWithEmailAndPassword(email, password);
-            setAccount({email:'', password:'',confirmPassword:''});
         }
         catch(err){
             console.log('Sign up fail: ', err.message);

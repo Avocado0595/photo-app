@@ -6,11 +6,17 @@ import * as yup from 'yup';
 import InputField from 'custom-fields/InputField';
 import './Signin.scss';
 import GoogleButton from 'components/GoogleButton/GoogleButton';
-
+import {signInActions} from 'utils/ModalSlice/SignInModalSlice';
+import {signUpActions} from 'utils/ModalSlice/SignUpModalSlice';
+import { useDispatch } from 'react-redux';
 
 
 function Signin(props) {
-    const {toggleModal} = props;
+    const dispatch = useDispatch();
+    const switchSignUp = ()=>{
+        dispatch(signInActions.closeModal());
+        dispatch(signUpActions.openModal());
+    }
     const validationSchema = yup.object().shape({
         email:yup.string().required('This field is required').email(),
         password: yup.string().required('This field is required').min(6,'Password at least 6 character')
@@ -58,11 +64,11 @@ function Signin(props) {
                                 label="Password"
                             />
                             <br/>
-                            <p>If you don't have any account, please <a href="">Sign Up here!</a></p>
+                            <p>If you don't have any account, please <div type="button" onClick={switchSignUp} className="login-btn-helper">Sign Up here!</div></p>
                         
                             <FormGroup className="signin-btn-group">
                                 <Button type="submit" color="primary"> {isSubmitting&&<Spinner size="sm" children=""/>} Sign In</Button>
-                                <GoogleButton toggleSignIn = {toggleModal}/>
+                                <GoogleButton/>
                             </FormGroup>
                         </Form>
                     )
