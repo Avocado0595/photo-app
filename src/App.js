@@ -7,10 +7,11 @@ import Header from './components/Header';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import {auth} from './firebase/Firebase';
 import { useDispatch, useSelector,  } from 'react-redux';
-import { setCurrentUser, signOut } from 'features/User/UserSlice';
+import { setCurrentUser, signOut, getOtherAuthor } from 'features/User/UserSlice';
 import About from 'features/About/About';
 import Contact from 'features/Contact/Contact';
 import User from 'features/User/index';
+import userApi from 'api/userApi';
 //lazy load photo
 const Photo = lazy(()=> import('./features/Photo/index'));
 
@@ -18,6 +19,11 @@ function App() {
   const currentUser = useSelector(state=>state.user);
   const dispatch =useDispatch();
   useEffect(()=>{
+    const getAuthorList = async() =>{
+      const authorList = await userApi.getAll();
+      dispatch(getOtherAuthor(authorList));
+    }
+    getAuthorList();
     const unSubcribeFromAuth = auth.onAuthStateChanged(async user=>{    
       if(user){
         const action = setCurrentUser({displayName:user.displayName, uid: user.uid});
@@ -35,7 +41,6 @@ function App() {
   },
   [dispatch]
   )
-  console.log(currentUser);
 
   return (
     <div className="App">

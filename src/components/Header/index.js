@@ -18,6 +18,7 @@ function Header() {
     const openSignupModalBtn = useCallback(()=>dispatch(signUpActions.openModal()), [dispatch]);
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+
     return (
         <Navbar color="light" light expand="lg" sticky="top">
             <NavbarBrand href="/photos"><img alt="logo" className="header__logo" src={Images.logo} /> <p className="header__text">Photo Gallery</p></NavbarBrand>

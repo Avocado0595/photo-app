@@ -8,7 +8,6 @@ import { useCallback } from 'react';
 function SigninModal() {
     const modal = useSelector(state=>state.signInToggle.isOpen);
     const dispatch = useDispatch();
-    console.log('[header-modal]: ', modal);
     const close = useCallback(()=> dispatch(signInActions.closeModal()), [dispatch]);
     return (<div>
         <MyModal modal={modal} component={<Signin/>} closeModal={close} header="Sign In"/>

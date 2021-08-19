@@ -1,18 +1,22 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, Button, Spinner } from 'reactstrap';
-import photoCategory from 'constants/photoCategory';
+//import photoCategory from 'constants/photoCategory';
+
 import { Formik, Form, FastField } from 'formik';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import PhotoField from 'custom-fields/PhotoField';
 import * as yup from 'yup';
 import { useParams } from 'react-router-dom';
-import photoApi from 'api/photoApi';
 import './PhotoForm.scss';
+import categoryApi from 'api/categoryApi';
+import photoApi from 'api/photoApi';
+import { useSelector } from 'react-redux';
 PhotoForm.propTypes = {
     title: PropTypes.string,
     categoryId: PropTypes.string,
+    categoryName: PropTypes.string,
     photoUrl: PropTypes.string
 };
 
@@ -20,6 +24,9 @@ function PhotoForm(props) {
     const {initialValues, toggle} = props; 
     const {photoId} = useParams();
     const isAddPhoto = !photoId;
+    const currentUserUid = useSelector(state=>state.user.currentUser.uid);
+    const categoryList = useSelector(state=>state.category.category);
+    
     const validationSchema = yup.object().shape({
         title:yup.string().required('This field is required'),
 
@@ -27,17 +34,23 @@ function PhotoForm(props) {
 
         photoUrl: yup.string().required('This field is required')
     })
+
     const onSubmit = useCallback(async (values)=>{
+      
         try{
-            await photoApi.postPhoto(values);
+            //check new category
             console.log(values);
+            const isExist = await categoryList.find((item)=>item.value === values.categoryId);
+            if(!isExist)
+                await categoryApi.postCategory({categoryId:values.categoryId, categoryName: values.categoryName, author: currentUserUid});
+            await photoApi.postPhoto(values);
             toggle();
         }
         catch(error){
             console.log('post data failed: ', error);
           }
-    }, [toggle]);
 
+    }, [toggle, currentUserUid, categoryList]);
     return (
         <div className="form-layout">
                <Formik initialValues={initialValues}
@@ -62,7 +75,7 @@ function PhotoForm(props) {
                                 component={SelectField}
                                 label="Photo Category"
                                 placeholder="Choose your category..."
-                                options = {photoCategory}
+                                // options = {categoryList}
                             />
                             <FastField 
                                 name="photoUrl"

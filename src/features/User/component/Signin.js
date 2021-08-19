@@ -32,6 +32,7 @@ function Signin(props) {
         const {email, password} = values;
         try{
             await auth.signInWithEmailAndPassword(email, password);
+            
         }
         catch(err){
             console.log('login fail: ', err.message);
@@ -64,7 +65,7 @@ function Signin(props) {
                                 label="Password"
                             />
                             <br/>
-                            <p>If you don't have any account, please <div type="button" onClick={switchSignUp} className="login-btn-helper">Sign Up here!</div></p>
+                            <p>If you don't have any account, please <div type="button" onClick={switchSignUp} className="helper-block">Sign Up here!</div></p>
                         
                             <FormGroup className="signin-btn-group">
                                 <Button type="submit" color="primary"> {isSubmitting&&<Spinner size="sm" children=""/>} Sign In</Button>
