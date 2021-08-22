@@ -1,0 +1,19 @@
+.preview-box{
+    margin-top: 8px;
+    width: 200px;
+    .preview-img{
+        margin-top: 8px;
+        width: 200px;
+    }
+}
+
+@media (max-width: 769px) {
+    .preview-box{
+        margin-top: 4px;
+        width: 100px;
+        .preview-img{
+            margin-top: 4px;
+            width: 100px;
+        }
+    }
+}

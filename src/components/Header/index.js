@@ -1,5 +1,5 @@
 import './Header.scss';
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Nav, Button } from 'reactstrap';
+import { Navbar, NavbarToggler, Collapse, NavItem, Nav, Button } from 'reactstrap';
 import { NavLink, useHistory } from 'react-router-dom';
 import React, { useCallback, useState } from 'react';
 import Images from 'constants/images';
@@ -21,7 +21,7 @@ function Header() {
 
     return (
         <Navbar color="light" light expand="lg" sticky="top">
-            <NavbarBrand href="/photos"><img alt="logo" className="header__logo" src={Images.logo} /> <p className="header__text">Photo Gallery</p></NavbarBrand>
+            <NavLink to="/photos" className="nav-brand"><img alt="logo" className="header__logo" src={Images.logo} /> <p className="header__text">Photo Gallery</p></NavLink>
             <div className="nav-search">
                 <input className="nav-search__input bg-light" type="text" placeholder="Search your favorite photo..." />
                 <button className="nav-search__btn bg-light"><img alt="search" className="nav-search__btn--icon" src={Images.searchIcon} /></button>

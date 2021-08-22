@@ -10,8 +10,8 @@ function User(props){
     return (
         <Container>
             <div className="row">
-                <div className="col-md-12 col-lg-3">user page</div>
-                <div className="col-md-12 col-lg-9">
+                <div className="col-md-12 col-lg-2">user page</div>
+                <div className="col-md-12 col-lg-10">
                     <Switch>
                         <Route exact path={match.url} component={MainPage} />
                         {/* <Route path={`${match.url}/add`} component={AddEditPage} />

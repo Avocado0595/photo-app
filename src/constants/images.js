@@ -11,6 +11,7 @@ import plus from '../assets/images/plus.svg';
 import google from '../assets/images/google.svg';
 import edit from '../assets/images/edit.svg';
 import deleteIcon from '../assets/images/delete.svg';
+import noPreview from '../assets/images/no-preview.jpg';
 const Images = {
     banner1 : banner1,
     banner2: banner2,
@@ -24,6 +25,7 @@ const Images = {
     plus: plus,
     google: google,
     edit: edit,
-    deleteIcon: deleteIcon
+    deleteIcon: deleteIcon,
+    noPreview:noPreview,
 }
 export default Images;

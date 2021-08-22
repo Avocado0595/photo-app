@@ -29,16 +29,16 @@ function AddEdit() {
         return new Promise(resolve=> {
             setTimeout(() => {
                 if(isAddPhoto){
-                const addAction = addPhoto(values);
-                dispatch(addAction);
-                history.push("/photos");
-                resolve(true);
+                    const addAction = addPhoto(values);
+                    dispatch(addAction);
+                    history.push("/photos");
+                    resolve(true);
                 }
                 else{
                     const editAction = editPhoto(values);
                     dispatch(editAction);
                     history.push("/photos");
-                resolve(true);
+                    resolve(true);
                 }
                 
             }

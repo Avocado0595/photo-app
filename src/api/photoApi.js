@@ -8,13 +8,20 @@ const photoApi = {
             return getPhotos.photos;
         return null;
     },
+    getByAuthor: async (params)=>{
+        const url = `/photo/${params}`;
+        const getPhotos = await axiosClient.get(url);
+        if (getPhotos.result)
+            return getPhotos.photos;
+        return null;
+    },
     postPhoto: (data)=>{
         const url = '/photo';
         axiosClient.post(url,data);
     },
-    updatePhoto: (data)=>{
-        const url = '/photo';
-        axiosClient.post(url,data);
+    updatePhoto: (params, data)=>{
+        const url = `/photo/${params}`;
+        axiosClient.put(url,data);
     },
     deletePhoto:async(params)=>{
         const url = `/photo/${params}`;

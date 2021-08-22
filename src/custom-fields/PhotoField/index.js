@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
+import { Button, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { ErrorMessage } from 'formik';
+import './PhotoField.scss';
+import Images from 'constants/images';
 
 PhotoField.propTypes = {
     field: PropTypes.object.isRequired,
@@ -25,6 +27,15 @@ function PhotoField(props) {
     const {name, value, onChange, onBlur} = field;
     const {errors, touched} = form;
     const showErr = errors[name] && touched[name];
+    const [imgUrl, setImgUrl] = useState(value);
+    const handleError = ()=>{
+        setImgUrl(Images.noPreview);
+      
+    }
+    const handlePreviewBtn=()=>{
+        setImgUrl(value);
+    }
+
     return (
         <FormGroup>
             {label && <Label for={name}>{label}</Label>}
@@ -37,6 +48,11 @@ function PhotoField(props) {
             invalid={showErr}
             />
             <ErrorMessage name={name} component={FormFeedback}/>
+            <div className="preview-box">
+                <Button onClick={handlePreviewBtn} size="sm" type="button">Preview</Button>
+                <br/>
+                <img src={imgUrl} className="preview-img" onError={handleError}/> 
+            </div>
         </FormGroup>
     );
 }

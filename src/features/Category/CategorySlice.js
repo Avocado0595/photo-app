@@ -2,15 +2,24 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const CategorySlice = createSlice({
     name: 'category',
-    initialState: {category: []},
+    initialState: {category: [], isLoading: false},
     reducers:{
-        setCategory: (state, action) =>{
-            state.category = action.payload;
+        getCategoryProcess: (state, action) =>{
+            return {...state, isLoading: true};
+        },
+        getCategorySuccess: (state, action) =>{
+            return {category: action.payload, isLoading: false};
+        },
+        getCategoryFail: (state, action) =>{
+            return {...state, isLoading: false};
+        },
+        addCategory:(state, action)=>{
+            return {...state, category: [...state.category, action.payload]};
         }
     }
 });
 
 const {reducer,actions} = CategorySlice;
-export const {setCategory} = actions;
+export const {getCategoryProcess, getCategorySuccess, getCategoryFail, addCategory} = actions;
 
 export default reducer;

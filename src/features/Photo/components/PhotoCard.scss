@@ -1,6 +1,13 @@
-
+.cover-modal{
+    position: absolute;
+    width: 100%;
+    height:100%;
+    z-index: 2;
+    background-image: linear-gradient(rgba(39, 39, 39, 0.248), transparent, transparent, rgba(55 ,54, 54 ,0.42 ));
+    visibility: hidden;
+}
     .photo-card {
-        &:hover .photo-card__modal, &:hover .modal-group{
+        &:hover .photo-card__modal, &:hover .modal-group, &:hover .cover-modal{
             visibility: visible;
         }
         position: relative;
@@ -14,7 +21,7 @@
         visibility: hidden;
         bottom: 0%;
         left:1%;
-        background-image: linear-gradient( rgba(39, 39, 39, 0.248),transparent,transparent,rgba(55,54,54,0.2));
+        
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -22,7 +29,7 @@
     }
 
     .modal-group{
-        z-index: 1;
+        z-index: 2;
         visibility: hidden;
         position: absolute;
         right:10px;
