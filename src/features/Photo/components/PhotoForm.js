@@ -56,7 +56,7 @@ function PhotoForm(props) {
             console.log('post data failed: ', error);
           }
 
-    }, [toggle, currentUserUid, categoryList, dispatch, isEdit ]);
+    }, [toggle, currentUserUid, categoryList, dispatch, isEdit, editedPhoto ]);
     return (
         <div className="form-layout">
                <Formik initialValues={initialValues}

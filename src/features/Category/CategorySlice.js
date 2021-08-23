@@ -8,7 +8,7 @@ const CategorySlice = createSlice({
             return {...state, isLoading: true};
         },
         getCategorySuccess: (state, action) =>{
-            return {category: action.payload, isLoading: false};
+            return {...state,category: action.payload, isLoading: false};
         },
         getCategoryFail: (state, action) =>{
             return {...state, isLoading: false};

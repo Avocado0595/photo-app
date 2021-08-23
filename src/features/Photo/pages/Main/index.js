@@ -4,20 +4,21 @@ import Images from 'constants/images';
 import PhotoCard from 'features/Photo/components/PhotoCard';
 import PhotoList from 'features/Photo/components/PhotoList';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
+
+
 Main.protoTypes = {};
 
 function Main(){
-    const authorList = useSelector(state=>state.author.authorList);
-    const photos = useSelector(state => state.photos.photoList);
-    const isLoading = useSelector(state=>state.author.isLoading);
-
+    const author = useSelector(state=>state.author);
+    const photos = useSelector(state => state.photos);
+    
    
-    if(!isLoading){
-    const elements = photos.map((photo) => {
-            let author = authorList.find(item => item.userId === photo.author);
-            return (<PhotoCard authorName={author?author.userName:null} key={photo._id} photo={photo} />);
+    if(!author.isLoading){
+    const elements = photos.photoList.map((photo) => {
+            let photoAuthor = author.authorList.find(item => item.userId === photo.author);
+            return (<PhotoCard authorName={photoAuthor?photoAuthor.userName:null} key={photo._id} photo={photo} />);
         });
     return (
         <div className="photo-main">

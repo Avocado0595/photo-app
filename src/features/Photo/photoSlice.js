@@ -1,3 +1,4 @@
+
 const { createSlice } = require("@reduxjs/toolkit");
 
 const photo = createSlice({
@@ -34,22 +35,40 @@ const photo = createSlice({
             const newphotobyAuthor = state.photobyAuthor.filter((item)=>item._id!==photoId);
             return {...state,photoList: newphotoList,photobyAuthor: newphotobyAuthor  };
         },
-        editPhoto:(state, action)=>{
+        editPhoto: (state, action)=>{
             const editedPhoto = action.payload;
-            const photoIndex = state.photoList.findIndex(photo=> photo.id === editedPhoto._id);
-            if (photoIndex >=0){
+            const photoIndex =  state.photoList.findIndex(photo=> photo._id === editedPhoto._id);
+            const photoIndexA = state.photobyAuthor.findIndex(photo=> photo._id === editedPhoto._id);
+            if (photoIndexA >=0 && photoIndex >=0){
+                state.photobyAuthor[photoIndexA] = editedPhoto;
                 state.photoList[photoIndex] = editedPhoto;
             }
-            const photoIndexA = state.photobyAuthor.findIndex(photo=> photo.id === editedPhoto._id);
-            if (photoIndexA >=0){
-                state.photobyAuthor[photoIndexA] = editedPhoto;
-            }
+            return state;
+           // return {...state, photoList: [...state.photoList],photobyAuthor:[...state.photobyAuthor] };
+        },
+        likePhoto: (state, action)=>{
+            
+            const {id, userId} = action.payload;
+            const photoIndex = state.photoList.findIndex(photo=> photo._id === id);
+            const checkExist = state.photoList[photoIndex].likeCount.findIndex(item=>item === userId);
+            if(photoIndex!==-1 && checkExist===-1){
+                state.photoList[photoIndex].likeCount.push(userId);
+            }            
+        },
+        unlikePhoto: (state, action)=>{
+            const {id, userId} = action.payload;
+            const photoIndex = state.photoList.findIndex(photo=> photo._id === id);
+            const checkExist = state.photoList[photoIndex].likeCount.findIndex(item=>item === userId);
+            if(photoIndex!==-1 && checkExist!==-1){
+                state.photoList[photoIndex].likeCount = state.photoList[photoIndex].likeCount.filter(i=>i!==userId);
+            }  
         }
+
     }
 });
 
 const {reducer,actions} = photo;
 export const {addPhoto, removePhoto, editPhoto, getPhotosSuccess,getPhotosProcess,getPhotosFail,
-    getPhotosByAuthorProcess, getPhotosByAuthorSuccess, getPhotosByAuthorFail} = actions;
+    getPhotosByAuthorProcess, getPhotosByAuthorSuccess, getPhotosByAuthorFail, likePhoto, unlikePhoto} = actions;
 
 export default reducer;

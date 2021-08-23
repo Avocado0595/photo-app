@@ -6,7 +6,8 @@ import stone_banner from '../assets/images/stonehenge-banner.jpg';
 import logo from '../assets/images/photo-logo.svg';
 import add from '../assets/images/add.svg';
 import searchIcon from '../assets/images/search-icon.svg';
-import like from '../assets/images/like.svg';
+import liked from '../assets/images/liked.svg';
+import unlike from '../assets/images/unlike.svg';
 import plus from '../assets/images/plus.svg';
 import google from '../assets/images/google.svg';
 import edit from '../assets/images/edit.svg';
@@ -21,11 +22,12 @@ const Images = {
     stone_banner: stone_banner,
     add: add,
     searchIcon: searchIcon,
-    like: like,
+    liked: liked,
     plus: plus,
     google: google,
     edit: edit,
     deleteIcon: deleteIcon,
     noPreview:noPreview,
+    unlike:unlike
 }
 export default Images;

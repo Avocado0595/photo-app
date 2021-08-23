@@ -8,33 +8,29 @@ import categoryApi from 'api/categoryApi';
 import { getCategoryProcess, getCategorySuccess, getCategoryFail } from 'features/Category/CategorySlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
 import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
-import { editPhoto } from 'features/Photo/photoSlice';
 function AddEditModal() {
     const dispatch = useDispatch();
-    
-    const {isOpen, header, photoId} = useSelector(state=>state.AddEditToggle);
-    const isEdit = useSelector(state=>state.AddEditToggle.isEdit);
-    const isCategoryLoading = useSelector(state=>state.category.isLoading);
     const currentUserUid =auth.currentUser.uid;
+    const {isOpen, header, photoId, isEdit} = useSelector(state=>state.AddEditToggle);
+    const isCategoryLoading = useSelector(state=>state.category.isLoading);
     const photoListByAuthor = useSelector(state=>state.photos.photobyAuthor);
     const editedPhoto = photoListByAuthor.find(item=>item._id === photoId);
-
+    
+    const initialValues = editedPhoto? {
+        title: editedPhoto.title,
+        categoryId: editedPhoto.categoryId,
+        photoUrl: editedPhoto.photoUrl,
+        author: auth.currentUser.uid
+    }:{
+        title: '',
+        categoryId:'',
+        photoUrl: '',
+        author: auth.currentUser.uid
+    }
+    
     const handleCloseAddModal = useCallback(()=>{
         dispatch(addEditActions.closeModal());
     }, [dispatch])
-
-    const initialValues = editedPhoto? {
-        title: editedPhoto.title,
-    categoryId: editedPhoto.categoryId,
-    photoUrl: editedPhoto.photoUrl,
-    author: auth.currentUser.uid
-    }:{
-        title: '',
-    categoryId:'',
-    photoUrl: '',
-    author: auth.currentUser.uid
-    }
-
     //get list of category to fill select field
     useEffect(()=>{
         const fetchCategoryList=  async() =>{
@@ -59,15 +55,15 @@ function AddEditModal() {
     //
     if(isCategoryLoading)
         return (<LoadingComponent/>)
-        else
-    return (
-        <>       
-        <Modal isOpen={isOpen} toggle={handleCloseAddModal}>
-        <ModalHeader toggle={handleCloseAddModal}>{header}</ModalHeader>
-        <PhotoForm isEdit={isEdit} editedPhoto={editedPhoto} initialValues={initialValues} toggle={handleCloseAddModal}/>
-    </Modal>
-    </>
-    );
+    else
+        return (
+            <>
+                <Modal isOpen={isOpen} toggle={handleCloseAddModal}>
+                    <ModalHeader toggle={handleCloseAddModal}>{header}</ModalHeader>
+                    <PhotoForm isEdit={isEdit} editedPhoto={editedPhoto} initialValues={initialValues} toggle={handleCloseAddModal} />
+                </Modal>
+            </>
+        );
 }
 
 export default AddEditModal;

@@ -8,10 +8,10 @@ const AddEditModalSlice = createSlice({
             return {...state,isOpen: true, isEdit: false, header: 'Add photo', photoId:''}
         },
         openEditModal: (state,action)=>{
-            return {isOpen: true, isEdit: true, header: 'Edit photo', photoId: action.payload}
+            return {...state, isOpen: true, isEdit: true, header: 'Edit photo', photoId: action.payload}
         },
         closeModal: (state)=>{
-            return {...state, isOpen: false}
+            return {...state, isOpen: false, isEdit: false, header: '', photoId:''}
         }
     }
 });

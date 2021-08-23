@@ -15,7 +15,7 @@ function GoogleButton() {
     const dispatch = useDispatch();
     const handleOnClick = async ()=>{
         const loginUser = await singInWithGoogle();
-        const userObj = {userName:loginUser.user.displayName, userId: loginUser.user.uid};
+        const userObj = {displayName:loginUser.user.displayName, uid: loginUser.user.uid};
         history.push('/');
         dispatch(signInActions.closeModal());
         dispatch(setCurrentUser(userObj));

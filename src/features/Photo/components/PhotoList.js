@@ -10,14 +10,15 @@ PhotoList.protoTypes = {};
 function PhotoList(props){
     const { breakpointColumns, photoList} = props;
     const isLoadingPhotoList = useSelector(state=>state.photos.isLoading);
-
 //TODO: pass author for banner
   const breakpointColumnsObj =  {default: 4, 1200: 3, 992: 3, 768: 2, 576: 2};
+
   if(isLoadingPhotoList)
   return(<LoadingComponent/>)
   else
     return (
       <div className="photo-main">
+       
         <Container className="text-center">
           <div className="row">
             <div className="col-md-12">

@@ -4,22 +4,19 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {currentUser: null, otherAuthors: []},
+    initialState: {currentUser: null},
     reducers:{
         setCurrentUser: (state, action) =>{
             state.currentUser = action.payload;
         },
         signOut: (state, action)=>{
             state.currentUser= null;
-        },
-        getOtherAuthor: (state, action)=>{
-            state.otherAuthors = action.payload;
         }
 
     }
 });
 
 const {reducer,actions} = userSlice;
-export const {setCurrentUser, signOut, getOtherAuthor} = actions;
+export const {setCurrentUser, signOut} = actions;
 
 export default reducer;

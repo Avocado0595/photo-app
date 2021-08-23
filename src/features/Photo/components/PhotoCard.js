@@ -1,15 +1,33 @@
 import Images from 'constants/images';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import './PhotoCard.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {signInActions} from 'utils/ModalSlice/SignInModalSlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
+import { likePhoto, unlikePhoto } from '../photoSlice';
+import photoApi from 'api/photoApi';
 
 function PhotoCard(props) {
     const dispatch = useDispatch();
     const openModal = useCallback(()=>dispatch(signInActions.openModal()),[dispatch]);
+    const user = useSelector(state=>state.user);
+    const userId = user.currentUser!==null?user.currentUser.uid:null;
     const {photo, isDisableHover, authorName, handleDeleteConfirm} = props;
-    const {photoUrl, _id, title } = photo;
+    const {photoUrl, _id, title, likeCount } = photo;
+    const isLiked = user.currentUser!==null?likeCount.findIndex(item=>item === user.currentUser.uid)===-1?false:true:null;
+    useEffect(()=>{
+        photoApi.updatePhoto(_id,photo);
+    },[photo, _id]);
+    const handleLike = (id, userId) => {
+        openModal();
+        if (userId) {
+            if(!isLiked)
+                dispatch(likePhoto({ id: id, userId: userId }));
+            else
+                dispatch(unlikePhoto({id: id, userId: userId}));
+        }
+    }
+    
     const handleEditPhoto = (id)=>{
         dispatch(addEditActions.openEditModal(id));
     }
@@ -21,13 +39,14 @@ function PhotoCard(props) {
 
     return (     
         <div className="row">     
+
             <div className="col-md-12 px-0">
                 <div className="photo-card rounded-lg overflow-hidden">
                 <div className="cover-modal"></div>
                 {!isDisableHover?
                         <div className="modal-group">
-                            <button onClick={openModal} className="control__btn"><img alt="like" className="control__btn--img small-icon" src={Images.like} /></button>
-                            <button onClick={openModal} className="control__btn"><img alt="add" className="control__btn--img small-icon" src={Images.plus} /></button>
+                            <button onClick={()=>handleLike(_id, userId)} className="control__btn"><img alt="like" className="control__btn--img small-icon" src={isLiked?Images.liked:Images.unlike} /></button>
+                            <button onClick={()=>openModal()} className="control__btn"><img alt="add" className="control__btn--img small-icon" src={Images.plus} /></button>
                         </div>: 
                         <div className="modal-group">
                             <button onClick={()=>handleEditPhoto(_id)} className="control__btn"><img alt="edit" className="control__btn--img small-icon" src={Images.edit} /></button>

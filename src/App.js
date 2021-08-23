@@ -54,7 +54,6 @@ function App() {
       }
 
   }
-  getAuthorList();
 
     const fetchPhotoList = async () => {
       try {
@@ -66,7 +65,12 @@ function App() {
         dispatch(getPhotosFail());
       }
     };
-    fetchPhotoList();
+    const asyncFetchData = async()=>{
+      await getAuthorList();
+      await fetchPhotoList();
+    }
+    asyncFetchData();
+    
   }, [dispatch])
 
   return (

@@ -9,6 +9,7 @@ import GoogleButton from 'components/GoogleButton/GoogleButton';
 import {signInActions} from 'utils/ModalSlice/SignInModalSlice';
 import {signUpActions} from 'utils/ModalSlice/SignUpModalSlice';
 import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../UserSlice';
 
 
 function Signin(props) {
@@ -32,6 +33,7 @@ function Signin(props) {
         const {email, password} = values;
         try{
             await auth.signInWithEmailAndPassword(email, password);
+            dispatch(setCurrentUser(auth.currentUser));
             
         }
         catch(err){

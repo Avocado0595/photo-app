@@ -3,7 +3,7 @@ import ConfirmModal from 'components/CustomModal/ConfirmModal/ConfirmModal';
 import AddModal from 'features/User/component/AddEditModal/AddEditModal';
 import PhotoCard from 'features/Photo/components/PhotoCard';
 import PhotoList from 'features/Photo/components/PhotoList';
-import { getPhotosByAuthorProcess, getPhotosByAuthorSuccess,getPhotosByAuthorFail, removePhoto, editPhoto } from 'features/Photo/photoSlice';
+import { getPhotosByAuthorProcess, getPhotosByAuthorSuccess,getPhotosByAuthorFail, removePhoto } from 'features/Photo/photoSlice';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,6 +23,10 @@ function Main({match}){
     const userId = test.slice(1,);
     const photos = useSelector(state=>state.photos.photobyAuthor);
     const isLoading = useSelector(state=>state.photos.isLoadingPhotoByAuthor);
+
+   
+
+
     const breakpointColumnsObj=  {default: 3, 1200: 3,992: 3,768: 2,576: 2,};
     const dispatch = useDispatch();
     useEffect(()=>{

@@ -51,7 +51,7 @@ function PhotoField(props) {
             <div className="preview-box">
                 <Button onClick={handlePreviewBtn} size="sm" type="button">Preview</Button>
                 <br/>
-                <img src={imgUrl} className="preview-img" onError={handleError}/> 
+                <img alt="preview" src={imgUrl} className="preview-img" onError={handleError}/> 
             </div>
         </FormGroup>
     );
