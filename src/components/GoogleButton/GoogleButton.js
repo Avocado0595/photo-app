@@ -15,11 +15,12 @@ function GoogleButton() {
     const dispatch = useDispatch();
     const handleOnClick = async ()=>{
         const loginUser = await singInWithGoogle();
-        const userObj = {displayName:loginUser.user.displayName, uid: loginUser.user.uid};
-        history.push('/');
-        dispatch(signInActions.closeModal());
-        dispatch(setCurrentUser(userObj));
+        const userObj = {displayName:loginUser.user.displayName, uid: loginUser.user.uid, photoURL: loginUser.user.photoURL};
+        console.log(userObj);
         await createUser(userObj); 
+        dispatch(setCurrentUser(userObj));
+        dispatch(signInActions.closeModal());
+        history.push('/');
     }
     return (
         <Button onClick={handleOnClick} type="button" color="primary" className="google-btn" > <div className="google-btn__layout"><img alt="google" className="small-icon google-icon" src={Images.google}/></div> Sign in with Google</Button>

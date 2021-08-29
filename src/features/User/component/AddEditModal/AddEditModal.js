@@ -13,19 +13,22 @@ function AddEditModal() {
     const currentUserUid =auth.currentUser.uid;
     const {isOpen, header, photoId, isEdit} = useSelector(state=>state.AddEditToggle);
     const isCategoryLoading = useSelector(state=>state.category.isLoading);
-    const photoListByAuthor = useSelector(state=>state.photos.photobyAuthor);
-    const editedPhoto = photoListByAuthor.find(item=>item._id === photoId);
+    const photoListByAuthor = useSelector(state=>state.photos);
+    const editedPhoto = photoListByAuthor.photobyAuthor.find(item=>item._id === photoId);
     
+   
     const initialValues = editedPhoto? {
         title: editedPhoto.title,
         categoryId: editedPhoto.categoryId,
         photoUrl: editedPhoto.photoUrl,
-        author: auth.currentUser.uid
+        author: auth.currentUser.uid,
+        likeCount: editedPhoto.likeCount,
     }:{
         title: '',
         categoryId:'',
         photoUrl: '',
-        author: auth.currentUser.uid
+        author: auth.currentUser.uid,
+        likeCount: []
     }
     
     const handleCloseAddModal = useCallback(()=>{
@@ -53,9 +56,10 @@ function AddEditModal() {
     },[dispatch, currentUserUid])
 
     //
-    if(isCategoryLoading)
+    if(isCategoryLoading){
         return (<LoadingComponent/>)
-    else
+    }
+    else{
         return (
             <>
                 <Modal isOpen={isOpen} toggle={handleCloseAddModal}>
@@ -64,6 +68,7 @@ function AddEditModal() {
                 </Modal>
             </>
         );
+    }
 }
 
 export default AddEditModal;

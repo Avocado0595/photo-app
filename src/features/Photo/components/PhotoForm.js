@@ -43,6 +43,7 @@ function PhotoForm(props) {
             }
             if(!isEdit){ 
                 await photoApi.postPhoto(values);
+                console.log(values);
                 dispatch(addPhoto(values));
             }
             else{

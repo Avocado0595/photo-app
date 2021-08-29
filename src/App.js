@@ -16,6 +16,7 @@ import { getPhotosFail, getPhotosProcess, getPhotosSuccess } from 'features/Phot
 import photoApi from 'api/photoApi';
 import { getAuthorsFail, getAuthorsProcess, getAuthorsSuccess } from 'features/Authors/authorsSlice';
 import authorApi from 'api/authorApi';
+import Upload from 'trynew/Upload';
 //lazy load photo
 const Photo = lazy(()=> import('./features/Photo/index'));
 
@@ -25,10 +26,11 @@ function App() {
   useEffect(() => {
     const unSubcribeFromAuth = auth.onAuthStateChanged(async user => {
       if (user) {
-        const action = setCurrentUser({ displayName: user.displayName, uid: user.uid });
+        const action = setCurrentUser({ displayName: user.displayName, uid: user.uid, photoURL: user.photoURL });
         const token = await auth.currentUser.getIdToken();
         localStorage.setItem('firebaseToken', token);
         dispatch(action);
+        
       }
       else {
         const action = signOut(user);
@@ -79,6 +81,7 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Switch>
+          <Route path='/test' component={Upload}/>
           <Redirect exact from='/' to='/photos'/>
           <Route path='/photos' component={Photo}/>
           <Route path='/about' component={About}/>

@@ -3,6 +3,7 @@ import { Switch, useRouteMatch, Route } from 'react-router-dom';
 import MainPage from './pages/Main/index';
 import NotFound from 'components/NotFound/index';
 import { Container } from 'reactstrap';
+import UserProfile from './component/UserProfile/UserProfile';
 User.protoTypes = {};
 
 function User(props){
@@ -10,7 +11,7 @@ function User(props){
     return (
         <Container>
             <div className="row">
-                <div className="col-md-12 col-lg-2">user page</div>
+                <div className="col-md-12 col-lg-2"><UserProfile/></div>
                 <div className="col-md-12 col-lg-10">
                     <Switch>
                         <Route exact path={match.url} component={MainPage} />

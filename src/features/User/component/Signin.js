@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {auth} from '../../../firebase/Firebase';
 import { Formik, Form, FastField } from 'formik';
-import { FormGroup, Button, Spinner } from 'reactstrap';
+import { FormGroup, Button, Spinner, Alert } from 'reactstrap';
 import * as yup from 'yup';
 import InputField from 'custom-fields/InputField';
 import './Signin.scss';
@@ -28,16 +28,16 @@ function Signin(props) {
         password:''
     }
     const [account, setAccount] = useState(initialValues);
-   
+    const [isLoginFail, setIsLoginFail] = useState(false);
     const handleSubmit = async (values) => {
         const {email, password} = values;
         try{
             await auth.signInWithEmailAndPassword(email, password);
-            dispatch(setCurrentUser(auth.currentUser));
-            
+            dispatch(setCurrentUser({displayName: auth.currentUser.displayName, uid: auth.currentUser.uid, photoURL: auth.currentUser.photoURL}));
+            setIsLoginFail(false);          
         }
         catch(err){
-            console.log('login fail: ', err.message);
+            setIsLoginFail(true);
             setAccount({...account, errMessage: err.message});
         }
     }
@@ -45,13 +45,13 @@ function Signin(props) {
         <div className="signin-form">
                <Formik initialValues={initialValues}
             onSubmit={handleSubmit}
-            validationSchema={validationSchema} 
-        >
+            validationSchema={validationSchema}>
             {
                 formikProps =>{
                     const {isSubmitting} = formikProps;
                     return (
                         <Form>
+                            {isLoginFail?<Alert color="danger">Your email or password is invalid!</Alert>:null}
                             <FastField 
                                 name="email"
                                 component={InputField}
@@ -66,8 +66,7 @@ function Signin(props) {
                                 component={InputField}
                                 label="Password"
                             />
-                            <br/>
-                            <p>If you don't have any account, please <div type="button" onClick={switchSignUp} className="helper-block">Sign Up here!</div></p>
+                            <div className="helper-block">If you don't have any account, please <div type="button" onClick={switchSignUp} className="helper-block--click"> Sign Up here!</div></div>
                         
                             <FormGroup className="signin-btn-group">
                                 <Button type="submit" color="primary"> {isSubmitting&&<Spinner size="sm" children=""/>} Sign In</Button>

@@ -1,0 +1,29 @@
+.profile-layout{
+    width: 168px;
+    .profile-layout__avatar{
+        position: relative;
+        .profile-layout__avatar--edit{
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: solid 1px #33333373;
+            background-color: rgba(243, 241, 241, 0.489);
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .profile-layout__avatar--edit--icon{
+                width: 20px;
+                
+            }
+        }
+        .profile-layout__avatar--img{
+            width: 140px;
+            border-radius: 50%;
+            border: solid 4px #33333373;
+    }
+}
+
+}

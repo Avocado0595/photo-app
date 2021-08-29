@@ -13,6 +13,8 @@ import google from '../assets/images/google.svg';
 import edit from '../assets/images/edit.svg';
 import deleteIcon from '../assets/images/delete.svg';
 import noPreview from '../assets/images/no-preview.jpg';
+import user from '../assets/images/user.svg';
+import editAva from '../assets/images/edit-ava.svg';
 const Images = {
     banner1 : banner1,
     banner2: banner2,
@@ -28,6 +30,8 @@ const Images = {
     edit: edit,
     deleteIcon: deleteIcon,
     noPreview:noPreview,
-    unlike:unlike
+    unlike:unlike,
+    user:user,
+    editAva: editAva,
 }
 export default Images;

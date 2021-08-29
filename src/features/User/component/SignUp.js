@@ -35,7 +35,6 @@ function Signup() {
         dispatch(signInActions.openModal());
     }
 
-
     const handleSubmit = async(values)=>{
         const {displayName, email, password, confirmPassword} = values;
         if (password !== confirmPassword){
@@ -47,7 +46,7 @@ function Signup() {
             await newUser.user.updateProfile({
                 displayName: displayName
             });
-            const userObj = {userName:newUser.user.displayName, userId: newUser.user.uid};
+            const userObj = {displayName:newUser.user.displayName, uid: newUser.user.uid, photoURL: newUser.user.photoURL};
             dispatch(setCurrentUser(userObj));
             await createUser(userObj);
         }
@@ -96,8 +95,7 @@ function Signup() {
                                 component={InputField}
                                 label="Confirm Password"
                             />
-                            <br/>
-                            <p>If you already have an account, please <div type="button" onClick={switchSignIn} className="helper-block">Sign In here!</div></p>
+                            <div className="helper-block">If you already have an account, please <div type="button" onClick={switchSignIn} className="helper-block--click">Sign In here!</div></div>
                             <FormGroup className="signin-btn-group">
                                 <Button type="submit" color="primary"> {isSubmitting&&<Spinner size="sm" children=""/>} Sign Up</Button>
                             </FormGroup>

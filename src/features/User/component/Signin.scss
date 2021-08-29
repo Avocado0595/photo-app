@@ -9,7 +9,11 @@ $primary:#0d6efd;
     flex-direction: row;
     justify-content: space-between;
 }
-
 .helper-block{
-    color: $primary
+    display: flex;
+    margin: 8px 0px;
+}
+.helper-block--click{
+    color: $primary;
+    margin-left: 4px;
 }

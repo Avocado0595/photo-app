@@ -14,6 +14,7 @@ function Header() {
     const history = useHistory();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
+    console.log(currentUser);
     const openSigninModalBtn = useCallback(()=>dispatch(signInActions.openModal()), [dispatch]);
     const openSignupModalBtn = useCallback(()=>dispatch(signUpActions.openModal()), [dispatch]);
     const [isOpen, setIsOpen] = useState(false);
@@ -38,15 +39,18 @@ function Header() {
                     {
                         currentUser ?
                             <>
-                                <NavItem>
+                            <div className="popup-user-menu">
+                            <NavItem>
                                     <div className="signout-div" onClick={() => {
                                         auth.signOut();
                                         localStorage.clear('firebaseToken');
                                         history.push('/');
                                     }}>Sign Out</div>
                                 </NavItem>
+                            </div>
+                                
                                 <NavItem>
-                                    <NavLink to={`/${currentUser.uid}`}>{currentUser.displayName}</NavLink>
+                                    <NavLink to={`/${currentUser.uid}`}><img className="avatar-img mid-icon" src={currentUser.photoURL===''?Images.user:currentUser.photoURL}/></NavLink>
                                 </NavItem>
                             </>
                             :

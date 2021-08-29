@@ -24,9 +24,6 @@ function Main({match}){
     const photos = useSelector(state=>state.photos.photobyAuthor);
     const isLoading = useSelector(state=>state.photos.isLoadingPhotoByAuthor);
 
-   
-
-
     const breakpointColumnsObj=  {default: 3, 1200: 3,992: 3,768: 2,576: 2,};
     const dispatch = useDispatch();
     useEffect(()=>{

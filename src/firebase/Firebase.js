@@ -1,25 +1,21 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/firestore';
-const config =
-{
+const config ={
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: "photo-app-db-18733.firebaseapp.com",
-    projectId: "photo-app-db-18733",
-    storageBucket: "photo-app-db-18733.appspot.com",
-    messagingSenderId: "950277745510",
-    appId: "1:950277745510:web:27e9845c204ca144b9f6a7",
-    measurementId: "G-0TP9P054GB"
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESS_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASURE_ID
 };
-
 
 firebase.initializeApp(config);
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({prompt: 'select_account'});
+
+export const auth = firebase.auth();
 export const singInWithGoogle = ()=> auth.signInWithPopup(provider);
 
 export default firebase;

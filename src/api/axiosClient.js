@@ -1,8 +1,8 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import firebase, {auth}  from '../firebase/Firebase';
+import {auth}  from '../firebase/Firebase';
 const getFirebaseToken = async()=>{
-    const currentUser = firebase.auth().currentUser;
+    const currentUser = auth.currentUser;
     if(currentUser)
         return currentUser.getIdToken();
 
@@ -30,7 +30,7 @@ const getFirebaseToken = async()=>{
 }
 
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
         'content-type':'application/json',
     },
