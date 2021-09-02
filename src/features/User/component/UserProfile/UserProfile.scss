@@ -1,13 +1,18 @@
 .profile-layout{
-    width: 168px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
     .profile-layout__avatar{
         position: relative;
+        margin-right: 24px;
         .profile-layout__avatar--edit{
-            width: 34px;
-            height: 34px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             border: solid 1px #33333373;
-            background-color: rgba(243, 241, 241, 0.489);
+            background-color: rgb(243, 241, 241);
+            opacity: 0.8;
             position: absolute;
             bottom: 10px;
             right: 10px;
@@ -15,15 +20,21 @@
             justify-content: center;
             align-items: center;
             .profile-layout__avatar--edit--icon{
-                width: 20px;
+                width: 18px;
                 
+            }
+            &:hover{
+                opacity: 1;
             }
         }
         .profile-layout__avatar--img{
-            width: 140px;
+            width: 120px;
             border-radius: 50%;
-            border: solid 4px #33333373;
+        }
     }
-}
+    .profile-data{
+        margin-left: 24px;
+    }
 
 }
+

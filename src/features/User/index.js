@@ -6,20 +6,22 @@ import { Container } from 'reactstrap';
 import UserProfile from './component/UserProfile/UserProfile';
 User.protoTypes = {};
 
-function User(props){
+function User(){
     const match = useRouteMatch();
     return (
         <Container>
             <div className="row">
-                <div className="col-md-12 col-lg-2"><UserProfile/></div>
-                <div className="col-md-12 col-lg-10">
+                
+                    <UserProfile userUid={match.params.userId}/>
                     <Switch>
-                        <Route exact path={match.url} component={MainPage} />
+                        <Route exact path={match.url}>
+                            <MainPage match={match}/>
+                        </Route>
                         {/* <Route path={`${match.url}/add`} component={AddEditPage} />
                     <Route path={`${match.url}/:photoId`} component={AddEditPage} /> */}
                         <Route component={NotFound} />
                     </Switch>
-                </div>
+               
             </div>
             
         </Container>

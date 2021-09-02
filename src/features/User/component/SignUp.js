@@ -46,7 +46,7 @@ function Signup() {
             await newUser.user.updateProfile({
                 displayName: displayName
             });
-            const userObj = {displayName:newUser.user.displayName, uid: newUser.user.uid, photoURL: newUser.user.photoURL};
+            const userObj = {displayName:newUser.user.displayName, uid: newUser.user.uid, photoURL: newUser.user.photoURL, email: newUser.user.email};
             dispatch(setCurrentUser(userObj));
             await createUser(userObj);
         }

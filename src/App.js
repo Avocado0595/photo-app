@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, {Suspense, lazy, useEffect} from 'react';
+import React, {Suspense, lazy, useEffect, useReducer} from 'react';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import NotFound  from './components/NotFound/index';
 import Header from './components/Header';
@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const unSubcribeFromAuth = auth.onAuthStateChanged(async user => {
       if (user) {
-        const action = setCurrentUser({ displayName: user.displayName, uid: user.uid, photoURL: user.photoURL });
+        const action = setCurrentUser({ displayName: user.displayName, uid: user.uid, photoURL: user.photoURL, email: user.email });
         const token = await auth.currentUser.getIdToken();
         localStorage.setItem('firebaseToken', token);
         dispatch(action);

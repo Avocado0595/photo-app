@@ -33,7 +33,7 @@ function Signin(props) {
         const {email, password} = values;
         try{
             await auth.signInWithEmailAndPassword(email, password);
-            dispatch(setCurrentUser({displayName: auth.currentUser.displayName, uid: auth.currentUser.uid, photoURL: auth.currentUser.photoURL}));
+            dispatch(setCurrentUser({displayName: auth.currentUser.displayName, uid: auth.currentUser.uid, photoURL: auth.currentUser.photoURL, email: auth.currentUser.email}));
             setIsLoginFail(false);          
         }
         catch(err){

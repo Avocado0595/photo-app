@@ -7,15 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import categoryApi from 'api/categoryApi';
 import { getCategoryProcess, getCategorySuccess, getCategoryFail } from 'features/Category/CategorySlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
-import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
+
 function AddEditModal() {
     const dispatch = useDispatch();
     const currentUserUid =auth.currentUser.uid;
     const {isOpen, header, photoId, isEdit} = useSelector(state=>state.AddEditToggle);
     const isCategoryLoading = useSelector(state=>state.category.isLoading);
-    const photoListByAuthor = useSelector(state=>state.photos);
-    const editedPhoto = photoListByAuthor.photobyAuthor.find(item=>item._id === photoId);
-    
+    const photos = useSelector(state=>state.photos);
+    const editedPhoto = photos.photobyAuthor.find(item=>item._id === photoId);
+    const addPhotoFromUser = photos.photoList.find(item=>item._id === photoId);
    
     const initialValues = editedPhoto? {
         title: editedPhoto.title,
@@ -23,6 +23,12 @@ function AddEditModal() {
         photoUrl: editedPhoto.photoUrl,
         author: auth.currentUser.uid,
         likeCount: editedPhoto.likeCount,
+    }:addPhotoFromUser?{
+        title: addPhotoFromUser.title,
+        categoryId: null,
+        photoUrl: addPhotoFromUser.photoUrl,
+        author: auth.currentUser.uid,
+        likeCount: [],
     }:{
         title: '',
         categoryId:'',
@@ -57,7 +63,7 @@ function AddEditModal() {
 
     //
     if(isCategoryLoading){
-        return (<LoadingComponent/>)
+        return null;
     }
     else{
         return (

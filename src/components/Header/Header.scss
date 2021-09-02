@@ -2,7 +2,18 @@ $primary: #9E9E9E;
 $text-color: #767676;
 .signout-div{
     cursor: pointer;
-    color: #0d6efd
+    color: white !important;
+    padding-left: 8px;
+    &:hover{
+        color: $text-color !important;
+    }
+}
+.submitphoto-div{
+    cursor: pointer;
+    color: $text-color;
+    &:hover{
+        color: black;
+    }
 }
 .navbar{
     .nav-brand{
@@ -19,15 +30,16 @@ $text-color: #767676;
         }
         .header__text{
             margin:0px;
-            color: black !important;
+            color: black;
         }
     }
     .navbar-toggler{
         padding: 0.1rem 0.1rem !important;
-        font-size: 1rem !important;
+        font-size: 0.8rem !important;
         color: $text-color;
     }
     .nav-search{
+        font-size: 18px;
         border-radius: 20px;
         padding: 0.4rem 0.4rem 0.4rem 0.8rem;
         border: solid 2px #ced4da;
@@ -45,6 +57,7 @@ $text-color: #767676;
             }
         }
         .nav-search__btn{
+            
             border: none;
             .nav-search__btn--icon{
                 width: 20px;
@@ -55,24 +68,49 @@ $text-color: #767676;
     .navbar-collapse{
         
         justify-content: center;
-        font-size: 20px;
+        font-size: 18px;
         flex-grow: 0.5 !important;
         .nav-item{
             margin: 0px 8px !important;
             a, div{
-                color: $text-color !important;
+                color: $text-color;
                 &:hover{
-                    color: black !important;
+                    color: black;
                 }
             }
         }
     }
 }
-
-.avatar-img{
-    border-radius: 50%;
+.avatar-btn{
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    .avatar-img{
+        border-radius: 50%;
+    }
 }
-
+.user-menu{
+    left: unset !important;
+    right: -4px !important;
+    margin-top: 4px !important;
+    background-color: #111 !important;
+    .dropdown-item{
+        padding: 4px !important;
+        &:hover{
+            background-color: unset;
+            .user-item{
+            color: $text-color !important;
+            }
+            
+        }
+        .user-item{
+            color: white !important;
+            padding-left: 8px;
+            display: block;
+        }
+   
+}
+}
 @media (max-width: 376px){
     .navbar{
     .navbar-brand{
