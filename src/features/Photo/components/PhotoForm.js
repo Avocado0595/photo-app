@@ -11,7 +11,7 @@ import './PhotoForm.scss';
 import categoryApi from 'api/categoryApi';
 import photoApi from 'api/photoApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory } from 'features/Category/CategorySlice';
+import { addCollection } from 'features/Collection/CollectionSlice';
 import { addPhoto, editPhoto } from '../photoSlice';
 PhotoForm.propTypes = {
     title: PropTypes.string,
@@ -24,7 +24,7 @@ function PhotoForm(props) {
     const {initialValues, toggle, isEdit, editedPhoto} = props; 
     const dispatch = useDispatch();
     const currentUserUid = useSelector(state=>state.user.currentUser.uid);
-    const categoryList = useSelector(state=>state.category.category);
+    const collections = useSelector(state=>state.collection.collections);
     const validationSchema = yup.object().shape({
         title:yup.string().required('This field is required'),
 
@@ -33,21 +33,21 @@ function PhotoForm(props) {
         photoUrl: yup.string().required('This field is required')
     })
 
-    const onSubmit = useCallback(async (values)=>{
+    const onSubmit = useCallback((values)=>{
       
         try{
-            const isExist = await categoryList.find((item)=>item.value === values.categoryId);
+            const isExist = collections.find((item)=>item.value === values.categoryId);
             if(!isExist){
-                await categoryApi.postCategory({categoryId:values.categoryId, categoryName: values.categoryName, author: currentUserUid});
-                dispatch(addCategory({value:values.categoryId, label: values.categoryName}));
+                categoryApi.postCategory({categoryId:values.categoryId, categoryName: values.categoryName, author: currentUserUid});
+                dispatch(addCollection({value:values.categoryId, label: values.categoryName}));
             }
             if(!isEdit){ 
-                await photoApi.postPhoto(values);
+                photoApi.postPhoto(values);
                 console.log(values);
                 dispatch(addPhoto(values));
             }
             else{
-                await photoApi.updatePhoto(editedPhoto._id,values);
+                photoApi.updatePhoto(editedPhoto._id,values);
                 dispatch(editPhoto(editedPhoto));  
             }
 
@@ -57,7 +57,7 @@ function PhotoForm(props) {
             console.log('post data failed: ', error);
           }
 
-    }, [toggle, currentUserUid, categoryList, dispatch, isEdit, editedPhoto ]);
+    }, [toggle, currentUserUid, collections, dispatch, isEdit, editedPhoto ]);
     return (
         <div className="form-layout">
                <Formik initialValues={initialValues}

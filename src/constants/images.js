@@ -15,6 +15,7 @@ import deleteIcon from '../assets/images/delete.svg';
 import noPreview from '../assets/images/no-preview.jpg';
 import user from '../assets/images/user.svg';
 import editAva from '../assets/images/edit-ava.svg';
+
 const Images = {
     banner1 : banner1,
     banner2: banner2,

@@ -11,28 +11,40 @@ import {signUpActions} from '../../utils/ModalSlice/SignUpModalSlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
 import './Header.scss';
 import AddEditModal from 'features/User/component/AddEditModal/AddEditModal';
+import { getKeyword } from 'features/Search/SearchSlice';
 
 function Header() {
     const history = useHistory();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.user.currentUser);
+    
+    const [isOpen, setIsOpen] = useState(false);
+    const [inputKeyword, setInputKeyword] = useState('');
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    
     const openSigninModalBtn = useCallback(()=>dispatch(signInActions.openModal()), [dispatch]);
     const openSignupModalBtn = useCallback(()=>dispatch(signUpActions.openModal()), [dispatch]);
-    const [isOpen, setIsOpen] = useState(false);
+    const handleAddPhoto = useCallback(() =>dispatch(addEditActions.openAddModal()), [dispatch]);
+    const handleSearchBtnClick = ()=>{
+        if(inputKeyword.trim() === '')
+            return;
+        dispatch(getKeyword(inputKeyword));
+        history.push(`/search/${inputKeyword}`);
+        setInputKeyword('');
+    };
+
+    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
     const toggle = () => setIsOpen(!isOpen);
-    const handleAddPhoto = useCallback(() => {
-        dispatch(addEditActions.openAddModal());
-    }, [dispatch]);
-    const [dropdownOpen, setOpen] = useState(false);
-
-    const toggleDropdown = () => setOpen(!dropdownOpen);
-
+    const handleKeyDown = (e)=>{
+        if(e.key === 'Enter')
+            handleSearchBtnClick();
+    }
     return (
         <Navbar color="light" light expand="lg" sticky="top">
             <NavLink to="/photos" className="nav-brand"><img alt="logo" className="header__logo" src={Images.logo} /> <p className="header__text">Photo Gallery</p></NavLink>
             <div className="nav-search">
-                <input className="nav-search__input bg-light" type="text" placeholder="Search your favorite photo..." />
-                <button className="nav-search__btn bg-light"><img alt="search" className="nav-search__btn--icon" src={Images.searchIcon} /></button>
+                <input onKeyDown={handleKeyDown} value={inputKeyword} onChange={(e)=>{setInputKeyword(e.target.value)}} className="nav-search__input bg-light" type="text" placeholder="Search your favorite photo..." />
+                <button onClick={handleSearchBtnClick} className="nav-search__btn bg-light"><img alt="search" className="nav-search__btn--icon" src={Images.searchIcon} /></button>
             </div>
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
@@ -46,33 +58,21 @@ function Header() {
                     {
                         currentUser ?
                             <>
-                            {/* <div className="popup-user-menu">
-                            <NavItem>
-                                    <div className="signout-div" onClick={handleAddPhoto}>Submit a photo</div>
-                                </NavItem>
-                            <NavItem>
-                                    <div className="signout-div" onClick={() => {
-                                        auth.signOut();
-                                        localStorage.clear('firebaseToken');
-                                        history.push('/');
-                                    }}>Sign Out</div>
-                                </NavItem>
-                            </div> */}
-                            
                                 <NavItem> <div className="submitphoto-div" onClick={handleAddPhoto}>Submit a photo</div></NavItem>
                                 <NavItem>    
                                     <ButtonDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
                                         <DropdownToggle className="avatar-btn">
-                                            <img className="avatar-img mid-icon" src={currentUser.photoURL?currentUser.photoURL:Images.user}/>
+                                            <img alt="avatar" className="avatar-img mid-icon" src={currentUser.photoURL?currentUser.photoURL:Images.user}/>
                                         </DropdownToggle>
                                         <DropdownMenu className="user-menu">
                                             <DropdownItem><Link className="user-item" to={`/${currentUser.uid}`}>Profile</Link></DropdownItem>
                                             <DropdownItem><NavLink className="user-item" to="/">Account setting</NavLink></DropdownItem>
-                                            <DropdownItem><div className="signout-div" onClick={async() => {
-                                        await auth.signOut();
-                                        history.push('/');
-                                        localStorage.clear('firebaseToken');
-                                    }}>Log out</div></DropdownItem>
+                                            <DropdownItem><div className="signout-div" onClick={async () => {
+                                                await auth.signOut();
+                                                history.push('/');
+                                                localStorage.clear('firebaseToken');
+                                            }}>Log out</div>
+                                            </DropdownItem>
                                         </DropdownMenu>
                                     </ButtonDropdown>
                                 </NavItem>

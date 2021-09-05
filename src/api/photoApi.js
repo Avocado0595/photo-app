@@ -26,6 +26,15 @@ const photoApi = {
     deletePhoto:async(params)=>{
         const url = `/photo/${params}`;
         axiosClient.delete(url);
+    },
+    searchPhoto: async(params)=>{
+        const url = `/photo/search/${params}`;
+        console.log(url);
+        const data = await axiosClient.get(url);
+        if(data.result){
+            return data.photos;
+        }
+        return null;
     }
 }
 

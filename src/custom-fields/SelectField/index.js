@@ -30,7 +30,7 @@ function SelectField(props) {
     const {name, value} = field;
     const {errors, touched} = form;
     const showErr = errors[name] && touched[name];
-    const options = useSelector(state=>state.category.category);
+    const options = useSelector(state=>state.collection.collections);
     const [newOptions, setNewsOptions] = useState([...options]);
     
     const selectedOption = newOptions?newOptions.find(option=>option.value === value):null;

@@ -7,3 +7,21 @@
       width: 30px;
     }
   }
+
+  .photo-main{
+    ul{
+      li{
+        cursor: pointer !important;
+        a{
+          color: #767676;
+          &.active, &:hover{
+            color: black !important;
+          }
+        }
+      }
+    }
+  }
+
+.text-center{
+  padding: 0px !important;
+}

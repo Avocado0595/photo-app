@@ -12,6 +12,13 @@ const categoryApi = {
         const url = '/category';
         axiosClient.post(url,data);
     },
+    getUserCollection:async(userUid)=>{
+        const url = `/category/${userUid}`;
+        const userCollection = await axiosClient.get(url);
+        if (userCollection.result)
+            return userCollection.collection;
+        return null;
+    }
     // updateCategory: (data)=>{
     //     const url = '/photo';
     //     axiosClient.post(url,data);

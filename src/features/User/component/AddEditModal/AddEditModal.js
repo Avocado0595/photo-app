@@ -5,14 +5,14 @@ import './AddModal.scss';
 import {auth} from '../../../../firebase/Firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import categoryApi from 'api/categoryApi';
-import { getCategoryProcess, getCategorySuccess, getCategoryFail } from 'features/Category/CategorySlice';
+import { getCollectionProcess, getCollectionSuccess, getCollectionFail } from 'features/Collection/CollectionSlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
 
 function AddEditModal() {
     const dispatch = useDispatch();
     const currentUserUid =auth.currentUser.uid;
     const {isOpen, header, photoId, isEdit} = useSelector(state=>state.AddEditToggle);
-    const isCategoryLoading = useSelector(state=>state.category.isLoading);
+    const isCategoryLoading = useSelector(state=>state.collection.isLoading);
     const photos = useSelector(state=>state.photos);
     const editedPhoto = photos.photobyAuthor.find(item=>item._id === photoId);
     const addPhotoFromUser = photos.photoList.find(item=>item._id === photoId);
@@ -44,18 +44,18 @@ function AddEditModal() {
     useEffect(()=>{
         const fetchCategoryList=  async() =>{
             try{
-                dispatch(getCategoryProcess());
+                dispatch(getCollectionProcess());
             const data = await categoryApi.getAll();
-            const categoryOptions = await data?data.filter((item)=>item.author === currentUserUid).map(item=>{
+            const collectionOptions = await data?data.filter((item)=>item.author === currentUserUid).map(item=>{
                 return{
                     value: item.categoryId,
                     label: item.categoryName
                 }}):null;
            
-            dispatch(getCategorySuccess(categoryOptions));
+            dispatch(getCollectionSuccess(collectionOptions));
             }
             catch(error){
-              dispatch(getCategoryFail());
+              dispatch(getCollectionFail());
             }
           };
           fetchCategoryList();

@@ -1,16 +1,55 @@
-.cover-modal{
-    position: absolute;
-    width: 100%;
-    height:100%;
-    z-index: 2;
-    background-image: linear-gradient(rgba(39, 39, 39, 0.248), transparent, transparent, rgba(55 ,54, 54 ,0.42 ));
-    visibility: hidden;
-}
+
     .photo-card {
         &:hover .photo-card__modal, &:hover .modal-group, &:hover .cover-modal{
             visibility: visible;
         }
         position: relative;
+        .cover-modal{
+            position: absolute;
+            width: 100%;
+            height:100%;
+            z-index: 2;
+            background-image: linear-gradient(rgba(39, 39, 39, 0.248), transparent, transparent, rgba(55 ,54, 54 ,0.42 ));
+            visibility: hidden;
+        }
+        .modal-group{
+            width: 100%;
+            z-index: 2;
+            visibility: hidden;
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+            padding:0px 12px;
+            align-items: center;
+            text-align: right;
+            &.author{
+                text-align: left;
+                bottom: 10px;
+            
+                a{
+                    color: white !important;
+                }
+            }
+            .title{
+                color: white !important;
+            }
+            .control-group{
+        .control__btn{            
+            background: white;
+            opacity: 0.8;
+            color: #333;
+            border: none;
+            margin: 8px 4px;
+            width: 35px;
+            height: 35px;
+            border-radius: 2px;
+            text-align: center;
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
+    }
         
     }
 
@@ -28,35 +67,7 @@
         padding: 8px 12px;       
     }
 
-    .modal-group{
-        z-index: 2;
-        visibility: hidden;
-        position: absolute;
-        right:10px;
-        text-align: right;
-        &.author{
-            text-align: left;
-            bottom: 10px;
-            left: 10px;
-            a{
-                color: white !important;
-            }
-        }
-    .control__btn{            
-        background: white;
-        opacity: 0.8;
-        color: #333;
-        border: none;
-        margin: 8px 4px;
-        width: 35px;
-        height: 35px;
-        border-radius: 2px;
-        text-align: center;
-        &:hover{
-            opacity: 1;
-        }
-    }
-}
+ 
 
 
 @media(max-width: 769px){
@@ -66,9 +77,11 @@
         &:hover .photo-card__modal{
             visibility: hidden;
         }
+        .control-group{
         .control__btn{
             border: solid 1px rgba(51, 51, 51, 0.503);
         }
+    }
         .modal-group{
             position:unset;
             visibility: visible;
@@ -81,6 +94,9 @@
                     color: #0d6efd !important;
                 }
                
+            }
+        .title{
+                color: black !important;
             }
             
         }

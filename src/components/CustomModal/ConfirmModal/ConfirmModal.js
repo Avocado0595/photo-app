@@ -13,7 +13,7 @@ const ConfirmModal = (props) => {
   return (
     <div>
       <Modal isOpen={isOpen} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalHeader toggle={toggle}>Delete Confirm</ModalHeader>
         <ModalBody>
             {content +' ' + title}
         </ModalBody>

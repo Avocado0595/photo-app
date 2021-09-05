@@ -1,12 +1,12 @@
 
 import './App.css';
-import React, {Suspense, lazy, useEffect, useReducer} from 'react';
+import React, {Suspense, lazy, useEffect} from 'react';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import NotFound  from './components/NotFound/index';
 import Header from './components/Header';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import {auth} from './firebase/Firebase';
-import { useDispatch, useSelector,  } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { setCurrentUser, signOut } from 'features/User/UserSlice';
 import About from 'features/About/About';
 import Contact from 'features/Contact/Contact';
@@ -16,12 +16,12 @@ import { getPhotosFail, getPhotosProcess, getPhotosSuccess } from 'features/Phot
 import photoApi from 'api/photoApi';
 import { getAuthorsFail, getAuthorsProcess, getAuthorsSuccess } from 'features/Authors/authorsSlice';
 import authorApi from 'api/authorApi';
-import Upload from 'trynew/Upload';
+import Search from 'features/Search/Search';
 //lazy load photo
 const Photo = lazy(()=> import('./features/Photo/index'));
 
 function App() {
-  const currentUser = useSelector(state=>state.user);
+
   const dispatch =useDispatch();
   useEffect(() => {
     const unSubcribeFromAuth = auth.onAuthStateChanged(async user => {
@@ -38,18 +38,12 @@ function App() {
       }
     }
     );
-    return () => unSubcribeFromAuth();
-  },
-    [dispatch]
-  )
-
-  useEffect(() => {
 
     const getAuthorList = async () => {
       try{
-      dispatch(getAuthorsProcess());
-      const authorList = await authorApi.getAll();
-      dispatch(getAuthorsSuccess(authorList));
+        dispatch(getAuthorsProcess());
+        const authorList = await authorApi.getAll();
+        dispatch(getAuthorsSuccess(authorList));
       }
       catch(err){
         dispatch(getAuthorsFail())
@@ -72,8 +66,10 @@ function App() {
       await fetchPhotoList();
     }
     asyncFetchData();
-    
-  }, [dispatch])
+    return () => unSubcribeFromAuth();
+  },
+    [dispatch]
+  )
 
   return (
     <div className="App">
@@ -81,12 +77,13 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Switch>
-          <Route path='/test' component={Upload}/>
+          {/* <Route path='/test' component={Upload}/> */}
           <Redirect exact from='/' to='/photos'/>
           <Route path='/photos' component={Photo}/>
           <Route path='/about' component={About}/>
           <Route path='/contact' component={Contact}/>
-          <Route path='/:userId' render={()=>{return (currentUser.currentUser? <User/> : <Redirect to="/"/>)}}/>
+          <Route path='/search/:keyword' component={Search}/>
+          <Route path='/:userId' component={User}/>
           <Route component={NotFound}/> 
         </Switch>
       </BrowserRouter>

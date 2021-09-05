@@ -1,0 +1,52 @@
+.collect-layout:hover{
+    .collect-modal{
+        visibility: visible;
+    }
+}
+
+    .collect-layout{
+        height: 360px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        .collect-modal{
+            position: absolute;
+            width: 104%;
+            height: 100%;
+            background-color:rgba(255, 255, 255, 0.179);
+            z-index: 4;
+            
+            visibility: hidden;
+        }
+  
+       .collect-item{
+           position: absolute;
+           height: 300px;
+       }
+       .img-1{
+            z-index: 3;
+            bottom: -16px;
+            left: -16px;
+       }
+       .img-2{
+            z-index:2;
+            bottom: 8px;
+            left: 8px;
+       }
+       .img-3{
+            z-index:1;
+            bottom: 24px;
+            left: 24px;
+       }
+    }
+
+
+
+@media (min-width: 480px){
+    .collect-layout{
+        height: 440px;
+        .collect-item{
+            height: 410px;
+        }
+    }
+}

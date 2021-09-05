@@ -10,15 +10,16 @@ import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
 Main.protoTypes = {};
 
 function Main(){
-    const author = useSelector(state=>state.author);
     const photos = useSelector(state => state.photos);
+
+    const author = useSelector(state=>state.author);
     const user = useSelector(state=>state.user);
     const currentUserUid = user.currentUser!==null?user.currentUser.uid:null;
+
     if(!author.isLoading){
-        const elements = user.currentUser!==null?photos.photoList.map((photo) => {
+        const elements = user.currentUser!==null?photos.photoList.filter(photo=>photo.author !== user.currentUser.uid).map((photo) => {
                 let photoAuthor = author.authorList.find(item => item.uid === photo.author);
-                if( photo.author !== user.currentUser.uid)
-                    return (<PhotoCard currentUserUid={currentUserUid} authorName={photoAuthor?photoAuthor.displayName:null} key={photo._id} photo={photo}/>);
+                return (<PhotoCard currentUserUid={currentUserUid} authorName={photoAuthor?photoAuthor.displayName:null} key={photo._id} photo={photo}/>);
             }):photos.photoList.map((photo) => {
                 let photoAuthor = author.authorList.find(item => item.uid === photo.author);
                 return (<PhotoCard currentUserUid={currentUserUid} authorName={photoAuthor?photoAuthor.displayName:null} key={photo._id} photo={photo}/>);

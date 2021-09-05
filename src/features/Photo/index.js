@@ -4,7 +4,7 @@ import MainPage from './pages/Main/index';
 import NotFound from '../../components/NotFound';
 Photo.protoTypes = {};
 
-function Photo(props){
+function Photo(){
     const match = useRouteMatch();
     return (
         <Switch>

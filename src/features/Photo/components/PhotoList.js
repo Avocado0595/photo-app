@@ -11,7 +11,7 @@ function PhotoList(props){
     const { breakpointColumns, photoList} = props;
     const isLoadingPhotoList = useSelector(state=>state.photos.isLoading);
 //TODO: pass author for banner
-  const breakpointColumnsObj =  {default: 4, 1200: 3, 992: 3, 768: 2, 576: 2};
+  const breakpointColumnsObj =  {default: 4, 1200: 3, 992: 3, 768: 2, 576: 1};
 
   if(isLoadingPhotoList)
   return(<LoadingComponent/>)
