@@ -12,12 +12,17 @@ const userApi = {
         const url = `/user/${params}`;
         const user = await axiosClient.get(url);
         if(user.result)
-            return user;
+            return user.user;
         return null;
     },
     postUser: async (data)=>{
         const url = '/user';
         axiosClient.post(url,data);
+    },
+    updateUser: async (uid,data)=>{
+        const url = `/user/${uid}`;
+        const up = await axiosClient.put(url,data);
+        console.log(up);
     },
    
 }

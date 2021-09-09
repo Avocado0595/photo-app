@@ -15,21 +15,20 @@ const photoApi = {
             return getPhotos.photos;
         return null;
     },
-    postPhoto: (data)=>{
+    postPhoto: async (data)=>{
         const url = '/photo';
-        axiosClient.post(url,data);
+        await axiosClient.post(url,data);
     },
-    updatePhoto: (params, data)=>{
+    updatePhoto: async (params, data)=>{
         const url = `/photo/${params}`;
-        axiosClient.put(url,data);
+        await axiosClient.put(url,data);
     },
-    deletePhoto:async(params)=>{
+    deletePhoto: async(params)=>{
         const url = `/photo/${params}`;
         axiosClient.delete(url);
     },
     searchPhoto: async(params)=>{
         const url = `/photo/search/${params}`;
-        console.log(url);
         const data = await axiosClient.get(url);
         if(data.result){
             return data.photos;

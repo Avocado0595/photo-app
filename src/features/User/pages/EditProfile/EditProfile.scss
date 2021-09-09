@@ -1,0 +1,53 @@
+.edit-profile-layout{
+    margin: auto;
+    width: 500px;
+    // display: flex;
+    // justify-content: center;
+    .edit-profile-layout__avatar{
+        position: relative;
+        margin: auto;
+        width: 200px;
+        padding: 8px;
+        .edit-profile-layout__avatar--edit{
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: solid 1px #33333373;
+            background-color: rgb(243, 241, 241);
+            opacity: 0.8;
+            position: absolute;
+            bottom: 10px;
+            right: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .edit-profile-layout__avatar--edit--icon{
+                width: 18px;
+                
+            }
+            &:hover{
+                opacity: 1;
+            }
+        }
+        .edit-profile-layout__avatar--img{
+            width: 120px;
+            border-radius: 50%;
+        }
+    }
+    .edit-profile-data{
+        margin: 12px 0px;
+        .edit-field-label{
+            text-align: right;
+            font-weight: 700;
+        }
+    }
+
+}
+
+#avatarPath{
+    display: none;
+}
+.edit-profile-btn{
+    margin-right: 12px;
+}

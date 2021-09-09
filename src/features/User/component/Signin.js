@@ -10,6 +10,7 @@ import {signInActions} from 'utils/ModalSlice/SignInModalSlice';
 import {signUpActions} from 'utils/ModalSlice/SignUpModalSlice';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../UserSlice';
+import userApi from 'api/userApi';
 
 
 function Signin(props) {
@@ -33,7 +34,9 @@ function Signin(props) {
         const {email, password} = values;
         try{
             await auth.signInWithEmailAndPassword(email, password);
-            dispatch(setCurrentUser({displayName: auth.currentUser.displayName, uid: auth.currentUser.uid, photoURL: auth.currentUser.photoURL, email: auth.currentUser.email}));
+            const googleUser = {displayName: auth.currentUser.displayName, uid: auth.currentUser.uid, photoURL: auth.currentUser.photoURL, email: auth.currentUser.email};
+            const databaseUser = await userApi.getOne(googleUser.uid);
+            dispatch(setCurrentUser(googleUser, databaseUser));
             setIsLoginFail(false);          
         }
         catch(err){

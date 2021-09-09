@@ -17,21 +17,23 @@ function PhotoList(props){
   return(<LoadingComponent/>)
   else
     return (
-      <div className="photo-main">
-       
-        <Container className="text-center">
-          <div className="row">
-            <div className="col-md-12">
-              <Masonry
-                breakpointCols={breakpointColumns ?? breakpointColumnsObj}
-                className="masonry-grid"
-                columnClassName="masonry-grid_column">
-                {photoList}
-              </Masonry>
+      
+        <div className="photo-main">
+          <Container className="text-center">
+            <div className="row">
+              <div className="col-md-12">
+                <Masonry
+                  breakpointCols={breakpointColumns ?? breakpointColumnsObj}
+                  className="masonry-grid"
+                  columnClassName="masonry-grid_column">
+                  {photoList}
+                </Masonry>
+              </div>
             </div>
-          </div>
-        </Container>
-      </div>
+          </Container>
+        </div>
+      
+     
     )
 }
 

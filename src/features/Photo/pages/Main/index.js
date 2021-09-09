@@ -6,6 +6,7 @@ import PhotoList from 'features/Photo/components/PhotoList';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
+import LazyLoad from 'react-lazyload';
 
 Main.protoTypes = {};
 
@@ -14,7 +15,7 @@ function Main(){
 
     const author = useSelector(state=>state.author);
     const user = useSelector(state=>state.user);
-    const currentUserUid = user.currentUser!==null?user.currentUser.uid:null;
+    const currentUserUid = user.currentUser?user.currentUser.uid:null;
 
     if(!author.isLoading){
         const elements = user.currentUser!==null?photos.photoList.filter(photo=>photo.author !== user.currentUser.uid).map((photo) => {
@@ -27,7 +28,9 @@ function Main(){
         return (
             <div className="photo-main">
                 <Banner author="unknow" backgroundUrl={Images.pocket_banner}/>
+                
                 <PhotoList photoList={elements}/>
+               
                 <button>Load more</button>
             </div>)
     }

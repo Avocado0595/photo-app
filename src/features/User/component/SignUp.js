@@ -12,6 +12,7 @@ import { setCurrentUser } from '../UserSlice';
 import { signUpActions } from 'utils/ModalSlice/SignUpModalSlice';
 import { signInActions } from 'utils/ModalSlice/SignInModalSlice';
 import createUser from 'utils/Tools/createUser';
+import userApi from 'api/userApi';
 
 function Signup() {
     const dispatch = useDispatch();
@@ -46,8 +47,9 @@ function Signup() {
             await newUser.user.updateProfile({
                 displayName: displayName
             });
+            const databaseUser = await userApi.getOne(newUser.user.uid);
             const userObj = {displayName:newUser.user.displayName, uid: newUser.user.uid, photoURL: newUser.user.photoURL, email: newUser.user.email};
-            dispatch(setCurrentUser(userObj));
+            dispatch(setCurrentUser(userObj, databaseUser));
             await createUser(userObj);
         }
         catch(err){

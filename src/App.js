@@ -6,7 +6,7 @@ import NotFound  from './components/NotFound/index';
 import Header from './components/Header';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import {auth} from './firebase/Firebase';
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { setCurrentUser, signOut } from 'features/User/UserSlice';
 import About from 'features/About/About';
 import Contact from 'features/Contact/Contact';
@@ -17,20 +17,27 @@ import photoApi from 'api/photoApi';
 import { getAuthorsFail, getAuthorsProcess, getAuthorsSuccess } from 'features/Authors/authorsSlice';
 import authorApi from 'api/authorApi';
 import Search from 'features/Search/Search';
+import EditProfile from 'features/User/pages/EditProfile/EditProfile';
+import userApi from 'api/userApi';
 //lazy load photo
 const Photo = lazy(()=> import('./features/Photo/index'));
 
 function App() {
-
+  const currentUser = useSelector(state=>state.user);
+  
   const dispatch =useDispatch();
   useEffect(() => {
     const unSubcribeFromAuth = auth.onAuthStateChanged(async user => {
       if (user) {
-        const action = setCurrentUser({ displayName: user.displayName, uid: user.uid, photoURL: user.photoURL, email: user.email });
-        const token = await auth.currentUser.getIdToken();
-        localStorage.setItem('firebaseToken', token);
-        dispatch(action);
         
+        const databaseUser = await userApi.getOne(user.uid);
+        const googleUser = {uid: user.uid, displayName: user.displayName, email: user.email, photoURL: user.photoURL};
+      
+          const action = setCurrentUser({googleUser,databaseUser});
+          const token = await auth.currentUser.getIdToken();
+          localStorage.setItem('firebaseToken', token);
+          dispatch(action);  
+          console.log(currentUser);
       }
       else {
         const action = signOut(user);
@@ -77,11 +84,11 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Switch>
-          {/* <Route path='/test' component={Upload}/> */}
           <Redirect exact from='/' to='/photos'/>
           <Route path='/photos' component={Photo}/>
           <Route path='/about' component={About}/>
           <Route path='/contact' component={Contact}/>
+          <Route path='/edit/:userId' component={EditProfile}/>
           <Route path='/search/:keyword' component={Search}/>
           <Route path='/:userId' component={User}/>
           <Route component={NotFound}/> 

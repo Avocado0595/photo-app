@@ -7,6 +7,7 @@ import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
 import { likePhoto, unlikePhoto } from '../photoSlice';
 import photoApi from 'api/photoApi';
 import './PhotoCard.scss';
+import LazyLoad from 'react-lazyload';
 
 
 function PhotoCard(props) {
@@ -55,7 +56,9 @@ function PhotoCard(props) {
                             </div>
                         }
                     </div>
+                    <LazyLoad key={photo._id} height={100} offset={[-100, 100]}>
                     <img src={photoUrl} className="img-fluid " alt='alt'></img>
+                    </LazyLoad>
                     {!isDisableHover ? <div className="modal-group author">
                         <Link to={`/${photo.author}`}>
                             {authorName}

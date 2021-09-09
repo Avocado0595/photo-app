@@ -20,6 +20,7 @@ function User(){
                         <Route exact path={`${match.url}/:collectionId`}>
                             <Collection/>
                         </Route>
+                        
                         <Route component={NotFound} />
                     </Switch>
                

@@ -7,7 +7,6 @@ function ErrorModal(props) {
     const closeToggle = useCallback(()=>dispatch(errorActions.closeModal()),[dispatch]);
     const {isOpen} = props;
     const errMessage = useSelector(state=>state.ErrorToggle.errMessage);
-    console.log('[error modal: ', isOpen);
     return (
            <Modal isOpen={isOpen} toggle={closeToggle}>
                <ModalHeader toggle={closeToggle}>Error</ModalHeader>

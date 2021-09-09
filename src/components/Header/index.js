@@ -66,7 +66,7 @@ function Header() {
                                         </DropdownToggle>
                                         <DropdownMenu className="user-menu">
                                             <DropdownItem><Link className="user-item" to={`/${currentUser.uid}`}>Profile</Link></DropdownItem>
-                                            <DropdownItem><NavLink className="user-item" to="/">Account setting</NavLink></DropdownItem>
+                                            <DropdownItem><NavLink className="user-item" to={`/edit/${currentUser.uid}`}>Account setting</NavLink></DropdownItem>
                                             <DropdownItem><div className="signout-div" onClick={async () => {
                                                 await auth.signOut();
                                                 history.push('/');
