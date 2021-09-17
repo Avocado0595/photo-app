@@ -1,11 +1,8 @@
-import categoryApi from 'api/categoryApi';
-import photoApi from 'api/photoApi';
-import { getUserCollectionFail, getUserCollectionProcess, getUserCollectionSuccess } from 'features/Collection/CollectionSlice';
+
 import PhotoCard from 'features/Photo/components/PhotoCard';
 import PhotoList from 'features/Photo/components/PhotoList';
 import PhotoModal from 'features/Photo/components/PhotoModal';
-import { getPhotosByAuthorFail, getPhotosByAuthorProcess, getPhotosByAuthorSuccess } from 'features/Photo/photoSlice';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { confirmActions } from 'utils/ModalSlice/ConfirmModalSlice';
@@ -29,8 +26,8 @@ function Collection(props) {
         dispatch(confirmActions.openModal({id:id, title:title}));
     }, [dispatch]);
 
-    const collectionObj = collection.userCollection.find(c=>c.categoryId === collectionId);
-    const photoList = photos.photobyAuthor.filter(photo=>photo.categoryId === collectionObj.categoryId).map((photo) => {
+    const collectionObj = collection.userCollection.find(c=>c.collectionId === collectionId);
+    const photoList = photos.photobyAuthor.filter(photo=>photo.collectionId === collectionObj.collectionId).map((photo) => {
         let photoAuthor = author.authorList.find(item => item.uid === photo.author);
         return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photo.author === currentUserUid?true:false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
   });
@@ -38,7 +35,7 @@ function Collection(props) {
     
     return (
         <div>
-            <h3>{collectionObj.categoryName}</h3>
+            <h3>{collectionObj.collectionName}</h3>
             <PhotoList photoList={photoList} userId={userId}/>
             {showPhotoModal?<PhotoModal/>:null}
         </div>

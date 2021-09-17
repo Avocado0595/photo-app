@@ -5,7 +5,7 @@ const authorApi = {
         const url = '/user';
         const userList = await axiosClient.get(url, {params});
         if (userList.result)
-            return userList.userList;
+            return userList.data;
         return null;
     },
 }

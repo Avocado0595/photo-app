@@ -12,13 +12,11 @@ Banner.defaultProps = {
 }
 
 function Banner(props) {
-    const {author, backgroundUrl} = props;
-
+    const {backgroundUrl} = props;
     const bannerStyle = backgroundUrl ? {backgroundImage: `url(${backgroundUrl})`}:{}
-    //TODO: add link to author
     return (
         <div className="banner" style={bannerStyle}>
-            <p className="banner__text">This will be the most like photo (but I didn't do it)<a href="/"> anonymous</a></p>
+            <p className="banner__text">Today photo</p>
         </div>
     );
 }

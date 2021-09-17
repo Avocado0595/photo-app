@@ -1,15 +1,13 @@
 .masonry-grid {
-    display: -webkit-box; /* Not needed if autoprefixing */
-    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: -webkit-box; 
+    display: -ms-flexbox; 
     display: flex;
     width: auto;
   }
   .masonry-grid_column {
-    padding-left: 15px; /* gutter size */
+    padding-left: 15px; 
     background-clip: padding-box;
   }
-  
-  /* Style your items */
   .masonry-grid_column > div {
     margin: 15px auto;
   }

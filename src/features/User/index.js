@@ -7,7 +7,7 @@ import UserProfile from './component/UserProfile/UserProfile';
 import Collection from './pages/Collection/Collection';
 import { useDispatch } from 'react-redux';
 import { getUserCollectionFail, getUserCollectionProcess, getUserCollectionSuccess } from 'features/Collection/CollectionSlice';
-import categoryApi from 'api/categoryApi';
+import collectionApi from 'api/collectionApi';
 import { getPhotosByAuthorFail, getPhotosByAuthorProcess, getPhotosByAuthorSuccess } from 'features/Photo/photoSlice';
 import photoApi from 'api/photoApi';
 
@@ -18,7 +18,7 @@ function User(){
     useEffect(() => {
         const getUserCollection = async () => {
           dispatch(getUserCollectionProcess());
-          const userCollection = await categoryApi.getUserCollection(userId);
+          const userCollection = await collectionApi.getUserCollection(userId);
           if (userCollection) {
             dispatch(getUserCollectionSuccess(userCollection));
           }
@@ -45,7 +45,6 @@ function User(){
     return (
         <Container>
             <div className="row">
-                
                     <UserProfile userUid={match.params.userId}/>
                     <Switch>
                         <Route exact path={match.url}>
@@ -54,12 +53,9 @@ function User(){
                         <Route exact path={`${match.url}/:collectionId`}>
                             <Collection/>
                         </Route>
-                        
                         <Route component={NotFound} />
-                    </Switch>
-               
+                    </Switch>   
             </div>
-            
         </Container>
        
     )

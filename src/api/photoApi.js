@@ -5,27 +5,33 @@ const photoApi = {
         const url = '/photo';
         const getPhotos = await axiosClient.get(url, {params});
         if (getPhotos.result)
-            return getPhotos.photos;
+            return getPhotos.data;
         return null;
     },
     getByAuthor: async (params)=>{
         const url = `/photo/${params}`;
         const getPhotos = await axiosClient.get(url);
         if (getPhotos.result)
-            return getPhotos.photos;
+            return getPhotos.data;
         return null;
     },
     postPhoto: async (data)=>{
         const url = '/photo';
-        await axiosClient.post(url,data);
+        const postData = await axiosClient.post(url,data);
+        if(!postData.result)
+            console.log('post photo fail');
     },
     updatePhoto: async (params, data)=>{
         const url = `/photo/${params}`;
-        await axiosClient.put(url,data);
+        const updatePhoto = await axiosClient.put(url,data);
+        if(!updatePhoto.result)
+            console.log('update photo fail');
     },
     deletePhoto: async(params)=>{
         const url = `/photo/${params}`;
-        axiosClient.delete(url);
+        const deletePhoto = await axiosClient.delete(url);
+        if(!deletePhoto.result)
+            deletePhoto.log('delete photo fail');
     },
     searchPhoto: async(params)=>{
         const url = `/photo/search/${params}`;

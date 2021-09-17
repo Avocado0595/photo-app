@@ -3,7 +3,6 @@ import Images from 'constants/images';
 import "./UserProfile.scss";
 import { useSelector } from 'react-redux';
 function UserProfile(props) {
-
     const uid = props.userUid;
     const authorList = useSelector(state => state.author);
     const currentAuthor = authorList.authorList.find(a => a.uid === uid);

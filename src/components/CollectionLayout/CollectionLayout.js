@@ -8,7 +8,7 @@ function CollectionLayout(props) {
     const match = useRouteMatch();
     const {collectionPhotos, collection} = props;
     const getCollectionName = (collectionId)=>{
-        return collection.userCollection.find(c=>c.categoryId === collectionId);
+        return collection.userCollection.find(c=>c.collectionId === collectionId);
     }
     if(!collection.isLoadUserCollection){
     return (
@@ -17,7 +17,7 @@ function CollectionLayout(props) {
                 if(collect[0])   
                 return(
                     <Col key={idx} lg="4" md="6" sm="6">
-                        <Link className="collect-link" to={`${match.url}/${collect[0].categoryId}`}> 
+                        <Link className="collect-link" to={`${match.url}/${collect[0].collectionId}`}> 
                         <div className="collect-layout">
                             <div className="collect-modal"></div>
                             <div className="collection-big-img">
@@ -30,7 +30,7 @@ function CollectionLayout(props) {
                         </div>
     
                         <div className="collection-description">
-                        <div className="collection-title">{getCollectionName(collect[0].categoryId).categoryName}</div>
+                        <div className="collection-title">{getCollectionName(collect[0].collectionId).collectionName}</div>
                         <div className="collection-no-photo">({collect.length>1?`${collect.length} photos`:`1 photo`})</div>
                         </div>
                             </Link>

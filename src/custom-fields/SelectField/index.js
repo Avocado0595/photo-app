@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-//import Select from 'react-select';
 import removeAccents from 'utils/Tools/handleViString';
 import AsyncCreatableSelect  from 'react-select/creatable';
 import { FormFeedback, FormGroup, Label } from 'reactstrap';
@@ -47,7 +46,7 @@ function SelectField(props) {
         field.onChange(changeEvent1);
         const changeEvent2 = {
             target:{
-                name: 'categoryName',
+                name: 'collectionName',
                 value: selectOption.label
             }
         };

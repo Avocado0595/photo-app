@@ -12,8 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../UserSlice';
 import userApi from 'api/userApi';
 
-
-function Signin(props) {
+function Signin(pops) {
     const dispatch = useDispatch();
     const switchSignUp = ()=>{
         dispatch(signInActions.closeModal());
@@ -60,8 +59,7 @@ function Signin(props) {
                                 component={InputField}
                                 label="Email"
                                 placeholder="Eg: email@email.com"
-                                type="email"
-                            />
+                                type="email"/>
 
                             <FastField 
                                 name="password"
@@ -70,7 +68,6 @@ function Signin(props) {
                                 label="Password"
                             />
                             <div className="helper-block">If you don't have any account, please <div type="button" onClick={switchSignUp} className="helper-block--click"> Sign Up here!</div></div>
-                        
                             <FormGroup className="signin-btn-group">
                                 <Button type="submit" color="primary"> {isSubmitting&&<Spinner size="sm" children=""/>} Sign In</Button>
                                 <GoogleButton/>

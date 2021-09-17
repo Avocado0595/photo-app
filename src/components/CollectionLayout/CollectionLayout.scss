@@ -2,6 +2,7 @@
     .collection-tab{
         margin-top: 8px;
     }
+    
     .collect-layout{
         border-radius: 5px;
         height: 280px;
@@ -22,7 +23,6 @@
                 visibility: visible;
             }
         }
-
         .collection-big-img{
             width: 60%;
             overflow: hidden;
@@ -33,47 +33,27 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-       
             .img-2, .img-3{
                 height: 50%; 
                 overflow: hidden;
                margin: 0 0 2px 2px;
             }
         }
-    //    .collect-item{
-    //        position: absolute;
-    //        height: 300px;
-    //    }
-    //    .img-1{
-    //         z-index: 3;
-    //         bottom: -16px;
-    //         left: -16px;
-    //    }
-    //    .img-2{
-    //         z-index:2;
-    //         bottom: 8px;
-    //         left: 8px;
-    //    }
-    //    .img-3{
-    //         z-index:1;
-    //         bottom: 24px;
-    //         left: 24px;
-    //    }
     }
 .collection-description{
     display: flex;
     align-items: center;
-.collection-title{
-    color: black;
-    text-align: left;
-    margin-right: 4px;
-    font-size: 24px;
-    font-weight: 600;
-}
-.collection-no-photo{
-    color: black;
-    font-style: italic;
-}
+    .collection-title{
+        color: black;
+        text-align: left;
+        margin-right: 4px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+    .collection-no-photo{
+        color: black;
+        font-style: italic;
+    }
 }
 
 @media (min-width: 480px){

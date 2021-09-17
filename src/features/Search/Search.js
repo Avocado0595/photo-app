@@ -22,7 +22,6 @@ function Search() {
         }
         getPhoto(searchPhoto.keyword);
 
-       
     }, [dispatch, searchPhoto.keyword]);
     if (!author.isLoading && !searchPhoto.isLoading) {
         const elements = searchPhoto.photos.map((photo) => {

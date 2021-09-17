@@ -1,5 +1,3 @@
-
-
 const { createSlice } = require("@reduxjs/toolkit");
 
 const authorsSlice = createSlice({

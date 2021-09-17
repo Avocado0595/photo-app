@@ -1,25 +1,24 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { FormGroup, Button, Spinner } from 'reactstrap';
-
 import { Formik, Form, FastField } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
+
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import PhotoField from 'custom-fields/PhotoField';
-import * as yup from 'yup';
-import './PhotoForm.scss';
-import categoryApi from 'api/categoryApi';
+import collectionApi from 'api/collectionApi';
 import photoApi from 'api/photoApi';
-import { useDispatch, useSelector } from 'react-redux';
 import { addCollection } from 'features/Collection/CollectionSlice';
 import { addPhoto, editPhoto } from '../photoSlice';
+import './PhotoForm.scss';
 PhotoForm.propTypes = {
     title: PropTypes.string,
-    categoryId: PropTypes.string,
-    categoryName: PropTypes.string,
+    collectionId: PropTypes.string,
+    collectionName: PropTypes.string,
     photoUrl: PropTypes.string
 };
-
 function PhotoForm(props) {
     const {initialValues, toggle, isEdit, editedPhoto} = props; 
     const dispatch = useDispatch();
@@ -27,19 +26,15 @@ function PhotoForm(props) {
     const collections = useSelector(state=>state.collection.collections);
     const validationSchema = yup.object().shape({
         title:yup.string().required('This field is required'),
-
-        categoryId: yup.string().required('This field is required').nullable(),
-
+        collectionId: yup.string().required('This field is required'),
         photoUrl: yup.string().required('This field is required')
     })
-
     const onSubmit = useCallback((values)=>{
-      
         try{
-            const isExist = collections.find((item)=>item.value === values.categoryId);
+            const isExist = collections.find((item)=>item.value === values.collectionId);
             if(!isExist){
-                categoryApi.postCategory({categoryId:values.categoryId, categoryName: values.categoryName, author: currentUserUid});
-                dispatch(addCollection({value:values.categoryId, label: values.categoryName}));
+                collectionApi.postCollection({collectionId:values.collectionId, collectionName: values.collectionName, author: currentUserUid});
+                dispatch(addCollection({value:values.collectionId, label: values.collectionName}));
             }
             if(!isEdit){ 
                 photoApi.postPhoto(values);
@@ -61,9 +56,7 @@ function PhotoForm(props) {
         <div className="form-layout">
                <Formik initialValues={initialValues}
             onSubmit={onSubmit}
-            validationSchema={validationSchema}
-           
-        >
+            validationSchema={validationSchema}>
             {
                 formikProps =>{
                     const {isSubmitting} = formikProps;
@@ -75,13 +68,11 @@ function PhotoForm(props) {
                                 label="Title"
                                 placeholder="Eg: input..."
                             />
-
                             <FastField 
-                                name="categoryId"
+                                name="collectionId"
                                 component={SelectField}
-                                label="Photo Category"
-                                placeholder="Choose your category..."
-                                // options = {categoryList}
+                                label="Photo collection"
+                                placeholder="Choose your collection..."
                             />
                             <FastField 
                                 name="photoUrl"
@@ -97,10 +88,7 @@ function PhotoForm(props) {
             }
         </Formik>
         </div>
-     
- 
     );
 }
 
 export default PhotoForm;
-//

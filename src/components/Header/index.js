@@ -1,17 +1,17 @@
-import { Navbar, NavbarToggler, Collapse, NavItem, Nav, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { NavLink, useHistory, Link } from 'react-router-dom';
 import React, { useCallback, useState } from 'react';
-import Images from 'constants/images';
-import SigninModal from 'features/User/component/signin-modal/signinModal';
+import { Navbar, NavbarToggler, Collapse, NavItem, Nav, Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '../../firebase/Firebase';
+import { NavLink, useHistory, Link } from 'react-router-dom';
+import SigninModal from 'features/User/component/signin-modal/signinModal';
 import SignupModal from 'features/User/component/signup-modal/signUpModal';
+import AddEditModal from 'features/User/component/AddEditModal/AddEditModal';
+import { auth } from '../../firebase/Firebase';
 import { signInActions } from '../../utils/ModalSlice/SignInModalSlice';
 import { signUpActions } from '../../utils/ModalSlice/SignUpModalSlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
-import './Header.scss';
-import AddEditModal from 'features/User/component/AddEditModal/AddEditModal';
 import { getKeyword } from 'features/Search/SearchSlice';
+import './Header.scss';
+import Images from 'constants/images';
 
 function Header() {
     const history = useHistory();
@@ -25,6 +25,8 @@ function Header() {
     const openSigninModalBtn = useCallback(() => dispatch(signInActions.openModal()), [dispatch]);
     const openSignupModalBtn = useCallback(() => dispatch(signUpActions.openModal()), [dispatch]);
     const handleAddPhoto = useCallback(() => dispatch(addEditActions.openAddModal()), [dispatch]);
+    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
+    const toggle = () => setIsOpen(!isOpen);
     const handleSearchBtnClick = () => {
         if (inputKeyword.trim() === '')
             return;
@@ -32,9 +34,6 @@ function Header() {
         history.push(`/search/${inputKeyword}`);
         setInputKeyword('');
     };
-
-    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-    const toggle = () => setIsOpen(!isOpen);
     const handleKeyDown = (e) => {
         if (e.key === 'Enter')
             handleSearchBtnClick();

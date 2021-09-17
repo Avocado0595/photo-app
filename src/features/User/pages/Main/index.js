@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
@@ -9,9 +9,8 @@ import PhotoList from 'features/Photo/components/PhotoList';
 import CollectionLayout from 'components/CollectionLayout/CollectionLayout';
 import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
 import { confirmActions } from 'utils/ModalSlice/ConfirmModalSlice';
-import { getPhotosByAuthorProcess, getPhotosByAuthorSuccess, getPhotosByAuthorFail, removePhoto } from 'features/Photo/photoSlice';
-import { getUserCollectionFail, getUserCollectionProcess, getUserCollectionSuccess } from 'features/Collection/CollectionSlice';
-import categoryApi from 'api/categoryApi';
+import { removePhoto } from 'features/Photo/photoSlice';
+
 import photoApi from 'api/photoApi';
 import "./Main.scss";
 import Images from 'constants/images';
@@ -24,7 +23,6 @@ function Main({ match }) {
   const author = useSelector(state => state.author);
   const collection = useSelector(state => state.collection);
  const showPhotoModal = useSelector(state=>state.photoModal);
-console.log(showPhotoModal);
   const [activeTab, setActiveTab] = useState('1');
   const toggle = tab => {if (activeTab !== tab) setActiveTab(tab);}
 
@@ -49,13 +47,13 @@ console.log(showPhotoModal);
       let photoAuthor = author.authorList.find(item => item.uid === photo.author);
       return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photo.author === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
     });
-    const likePhotos = photos.photoList.filter(photo => photo.likeCount.findIndex(i => i === userId) !== -1).map((photo) => {
+    const likePhotos = photos.photoList.filter(photo => photo.like.findIndex(i => i === userId) !== -1).map((photo) => {
       let photoAuthor = author.authorList.find(item => item.uid === photo.author);
       return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photoAuthor.uid === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
     });
 
     const collectionPhotos = collection.userCollection.map(collect => {
-      let collectPhoto = photos.photobyAuthor.filter(photo => photo.categoryId === collect.categoryId);
+      let collectPhoto = photos.photobyAuthor.filter(photo => photo.collectionId === collect.collectionId);
       return collectPhoto;
     });
 

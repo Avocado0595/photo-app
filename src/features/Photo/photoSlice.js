@@ -44,39 +44,31 @@ const photo = createSlice({
                 state.photoList[photoIndex] = editedPhoto;
             }
             return state;
-           // return {...state, photoList: [...state.photoList],photobyAuthor:[...state.photobyAuthor] };
         },
         likePhoto: (state, action)=>{
-            console.log('like');
             const {id, userId} = action.payload;
             const photoIndex = state.photoList.findIndex(photo=> photo._id === id);
-            const checkExist = photoIndex!==-1?state.photoList[photoIndex].likeCount.findIndex(item=>item === userId):null;
+            const checkExist = photoIndex!==-1?state.photoList[photoIndex].like.findIndex(item=>item === userId):null;
             if(checkExist === -1)
-                state.photoList[photoIndex].likeCount.push(userId);
-            
+                state.photoList[photoIndex].like.push(userId);
             const photoIndexA = state.photobyAuthor.findIndex(photo=> photo._id === id); 
-            const checkExistA = photoIndexA!==-1?state.photobyAuthor[photoIndexA].likeCount.findIndex(item=>item === userId):null;
-            
+            const checkExistA = photoIndexA!==-1?state.photobyAuthor[photoIndexA].like.findIndex(item=>item === userId):null;
             if(checkExistA === -1)
-                state.photobyAuthor[photoIndexA].likeCount.push(userId);
-            
+                state.photobyAuthor[photoIndexA].like.push(userId);  
         },
         unlikePhoto: (state, action)=>{
-            console.log('unlike');
             const {id, userId} = action.payload;
             const photoIndex = state.photoList.findIndex(photo=> photo._id === id);
-            
             if(photoIndex!==-1){
-                const checkExist = state.photoList[photoIndex].likeCount.findIndex(item=>item === userId);
+                const checkExist = state.photoList[photoIndex].like.findIndex(item=>item === userId);
                 if(checkExist!==-1)
-                    state.photoList[photoIndex].likeCount = state.photoList[photoIndex].likeCount.filter(i=>i!==userId);
+                    state.photoList[photoIndex].like = state.photoList[photoIndex].like.filter(i=>i!==userId);
             }  
-
             const photoIndexA = state.photobyAuthor.findIndex(photo=> photo._id === id);
             if(photoIndexA!==-1){
-                const checkExistA = state.photobyAuthor[photoIndexA].likeCount.findIndex(item=>item === userId);
+                const checkExistA = state.photobyAuthor[photoIndexA].like.findIndex(item=>item === userId);
                 if(checkExistA!==-1)
-                    state.photobyAuthor[photoIndexA].likeCount = state.photobyAuthor[photoIndexA].likeCount.filter(i=>i!==userId);
+                    state.photobyAuthor[photoIndexA].like = state.photobyAuthor[photoIndexA].like.filter(i=>i!==userId);
             } 
         }
 

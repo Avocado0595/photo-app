@@ -19,8 +19,6 @@ const searchSlice = createSlice({
         getPhotoFail:(state)=>{
             return {...state, isLoading: false};
         }
-      
-
     }
 });
 

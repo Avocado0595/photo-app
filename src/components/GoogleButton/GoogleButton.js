@@ -10,6 +10,7 @@ import {signInActions} from 'utils/ModalSlice/SignInModalSlice';
 import { setCurrentUser } from 'features/User/UserSlice';
 import createUser from 'utils/Tools/createUser';
 import userApi from 'api/userApi';
+import { addAuthor } from 'features/Authors/authorsSlice';
 
 function GoogleButton() {
     const history = useHistory();
@@ -20,6 +21,7 @@ function GoogleButton() {
         const userObj = {displayName:loginUser.user.displayName, uid: loginUser.user.uid, photoURL: loginUser.user.photoURL, email: loginUser.user.email};
         await createUser(userObj); 
         dispatch(setCurrentUser({googleUser:userObj, databaseUser: databaseUser}));
+        dispatch(addAuthor(userObj??databaseUser));
         dispatch(signInActions.closeModal());
         history.push('/');
     }
