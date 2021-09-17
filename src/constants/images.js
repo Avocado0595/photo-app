@@ -14,6 +14,8 @@ import edit from '../assets/images/edit.svg';
 import deleteIcon from '../assets/images/delete.svg';
 import noPreview from '../assets/images/no-preview.jpg';
 import user from '../assets/images/user.svg';
+import aphoto from '../assets/images/aphoto.svg';
+import collection from '../assets/images/collection.svg';
 import editAva from '../assets/images/edit-ava.svg';
 
 const Images = {
@@ -34,5 +36,7 @@ const Images = {
     unlike:unlike,
     user:user,
     editAva: editAva,
+    aphoto: aphoto,
+    collection: collection
 }
 export default Images;

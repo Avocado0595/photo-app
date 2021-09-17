@@ -15,43 +15,43 @@ PhotoField.propTypes = {
     disabled: PropTypes.bool,
 };
 
-PhotoField.defaultProps={
-    type:'text',
-    label:'',
+PhotoField.defaultProps = {
+    type: 'text',
+    label: '',
     placeholder: '',
     disabled: false
 }
 
 function PhotoField(props) {
-    const {form, field,type,label,placeholder ,disabled} = props;
-    const {name, value, onChange, onBlur} = field;
-    const {errors, touched} = form;
+    const { form, field, type, label, placeholder, disabled } = props;
+    const { name, value, onChange, onBlur } = field;
+    const { errors, touched } = form;
     const showErr = errors[name] && touched[name];
     const [imgUrl, setImgUrl] = useState(value);
-    const handleError = ()=>{
+    const handleError = () => {
         setImgUrl(Images.noPreview);
-      
+
     }
-    const handlePreviewBtn=()=>{
+    const handlePreviewBtn = () => {
         setImgUrl(value);
     }
 
     return (
         <FormGroup>
             {label && <Label for={name}>{label}</Label>}
-            <Input name={name} id={name} value={value} 
-            onChange={onChange}
-            onBlur={onBlur}
-            type={type}
-            disabled={disabled}
-            placeholder={placeholder}
-            invalid={showErr}
+            <Input name={name} id={name} value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                type={type}
+                disabled={disabled}
+                placeholder={placeholder}
+                invalid={showErr}
             />
-            <ErrorMessage name={name} component={FormFeedback}/>
+            <ErrorMessage name={name} component={FormFeedback} />
             <div className="preview-box">
                 <Button onClick={handlePreviewBtn} size="sm" type="button">Preview</Button>
-                <br/>
-                <img alt="preview" src={imgUrl} className="preview-img" onError={handleError}/> 
+                <br />
+                <img alt="preview" src={imgUrl} className="preview-img" onError={handleError} />
             </div>
         </FormGroup>
     );

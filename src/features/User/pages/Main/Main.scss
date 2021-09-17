@@ -13,9 +13,16 @@
       li{
         cursor: pointer !important;
         a{
-          color: #767676;
+          opacity: 0.5;
+          color: black !important;
           &.active, &:hover{
-            color: black !important;
+            opacity: 1;
+          }
+          .xsmall-icon{
+            margin-right: 4px;
+            margin-bottom: 2px;
+            width: 14px;
+           
           }
         }
       }

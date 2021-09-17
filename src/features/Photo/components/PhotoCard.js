@@ -1,25 +1,36 @@
 import Images from 'constants/images';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { signInActions } from 'utils/ModalSlice/SignInModalSlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
 import { likePhoto, unlikePhoto } from '../photoSlice';
 import photoApi from 'api/photoApi';
 import './PhotoCard.scss';
+import { photoModalActions } from 'utils/ModalSlice/PhotoModalSlice';
+import UserInfo from 'components/UserInfo/UserInfo';
+import {useSelector} from 'react';
+import PhotoModal from 'features/Photo/components/PhotoModal';
 import LazyLoad from 'react-lazyload';
-
 
 function PhotoCard(props) {
     const dispatch = useDispatch();
-    const openSinginModal = useCallback(() => dispatch(signInActions.openModal()), [dispatch]);
-    const { photo, isDisableHover, authorName, handleDeleteConfirm, currentUserUid } = props;
+ 
+    const { photo, isDisableHover, author, handleDeleteConfirm, currentUserUid } = props;
     const { photoUrl, _id, title, likeCount } = photo;
     const isLiked = currentUserUid !== null ? (likeCount.findIndex(item => item === currentUserUid) === -1 ? false : true) : null;
-    useEffect(() => photoApi.updatePhoto(_id, photo), [photo, _id]);
-    const handleLike = (id, userId) => {
+
+    const openSinginModal = useCallback(() => dispatch(signInActions.openModal()), [dispatch]);
+
+    const handleLike = async (id, userId) => {
         if (userId) {
-            !isLiked ? dispatch(likePhoto({ id: id, userId: userId })) : dispatch(unlikePhoto({ id: id, userId: userId }));
+            if (!isLiked) {
+                dispatch(likePhoto({ id: id, userId: userId }));
+                await photoApi.likePhoto(_id, { userUid: userId });
+            }
+            else {
+                dispatch(unlikePhoto({ id: id, userId: userId }));
+                await photoApi.unLikePhoto(_id, { userUid: userId });
+            }
         }
         else {
             openSinginModal();
@@ -37,12 +48,17 @@ function PhotoCard(props) {
         if (!currentUserUid)
             openSinginModal();
     }
-
+    const handleOpenPhotoModel = useCallback(()=>{
+        if(author){
+            console.log(author);
+            dispatch(photoModalActions.openModal({photo:photo}));
+        }
+    },[author]);
     return (
         <div className="row">
             <div className="col-md-12 px-0">
                 <div className="photo-card rounded-lg overflow-hidden">
-                    <div className="cover-modal"></div>
+                    <div onClick={handleOpenPhotoModel} className="cover-modal"></div>
                     <div className="modal-group">
                         <div className="title">{title}</div>
                         {!isDisableHover ?
@@ -56,16 +72,15 @@ function PhotoCard(props) {
                             </div>
                         }
                     </div>
-                    <LazyLoad key={photo._id} height={100} offset={[-100, 100]}>
-                    <img src={photoUrl} className="img-fluid " alt='alt'></img>
-                    </LazyLoad>
-                    {!isDisableHover ? <div className="modal-group author">
-                        <Link to={`/${photo.author}`}>
-                            {authorName}
-                        </Link>
+                    
+                    <LazyLoad height={200} offset={[-100,100]}><img src={photoUrl} className="img-fluid " alt='alt'/></LazyLoad>
+                   
+                    {!isDisableHover && author ? <div className="modal-group author">
+                        <UserInfo userName={author.displayName} avatar={author.photoURL} userLink={`/${photo.author}`}/>
                     </div> : null}
                 </div>
             </div>
+      
         </div>
     );
 }

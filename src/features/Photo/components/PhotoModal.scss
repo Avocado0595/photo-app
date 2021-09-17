@@ -1,0 +1,53 @@
+.modal-content{
+    display: inline-table !important;
+}
+.photo-modal-header{
+    padding: 0 1rem !important;
+    .modal-title{
+        width: 90%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .control-group{
+            margin-left: auto;
+            .control__btn{
+                border: solid 1px #33333354;
+                border-radius: 4px;
+            }
+        }
+    }
+}
+.photo-modal-footer{
+    padding: 0 0 1rem 1rem !important;
+    .footer__table{
+        margin-right: auto;
+        &--row,&--header{
+            width: 200px;
+            text-align: left;
+        }
+    }
+
+}
+.modal-author{
+    font-size: small;
+}
+.modal-img-layout{
+    display: flex;
+    .modal-img{
+        margin: auto;
+    }
+}
+@media (min-width: 576px){
+    .photo-modal-layout {
+        max-width: 1280px !important;
+    }
+}
+.photo-modal-header{
+    .modal-title{
+        font-size: 14px;
+        a{
+            color: black !important;
+    
+        }
+    }
+}

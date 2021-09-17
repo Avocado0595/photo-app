@@ -19,10 +19,6 @@ const categoryApi = {
             return userCollection.collection;
         return null;
     }
-    // updateCategory: (data)=>{
-    //     const url = '/photo';
-    //     axiosClient.post(url,data);
-    // }
 }
 
 export default categoryApi;

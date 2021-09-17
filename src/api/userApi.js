@@ -21,8 +21,8 @@ const userApi = {
     },
     updateUser: async (uid,data)=>{
         const url = `/user/${uid}`;
-        const up = await axiosClient.put(url,data);
-        console.log(up);
+        const updatedUser = await axiosClient.put(url,data);
+        return updatedUser;
     },
    
 }

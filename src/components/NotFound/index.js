@@ -1,7 +1,4 @@
 import React from 'react';
-
-NotFound.protoTypes = {};
-
 function NotFound(){
     return (
         <div>
@@ -9,5 +6,4 @@ function NotFound(){
         </div>
     )
 }
-
 export default NotFound;

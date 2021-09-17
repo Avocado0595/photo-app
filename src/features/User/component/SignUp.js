@@ -13,6 +13,7 @@ import { signUpActions } from 'utils/ModalSlice/SignUpModalSlice';
 import { signInActions } from 'utils/ModalSlice/SignInModalSlice';
 import createUser from 'utils/Tools/createUser';
 import userApi from 'api/userApi';
+import { addAuthor } from 'features/Authors/authorsSlice';
 
 function Signup() {
     const dispatch = useDispatch();
@@ -49,8 +50,9 @@ function Signup() {
             });
             const databaseUser = await userApi.getOne(newUser.user.uid);
             const userObj = {displayName:newUser.user.displayName, uid: newUser.user.uid, photoURL: newUser.user.photoURL, email: newUser.user.email};
-            dispatch(setCurrentUser(userObj, databaseUser));
             await createUser(userObj);
+            dispatch(addAuthor(userObj));
+            dispatch(setCurrentUser({googleUser:userObj,databaseUser:databaseUser}));
         }
         catch(err){
            dispatch(errorActions.openModal(err.message)); 

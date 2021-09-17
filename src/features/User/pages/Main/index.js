@@ -14,6 +14,8 @@ import { getUserCollectionFail, getUserCollectionProcess, getUserCollectionSucce
 import categoryApi from 'api/categoryApi';
 import photoApi from 'api/photoApi';
 import "./Main.scss";
+import Images from 'constants/images';
+import PhotoModal from 'features/Photo/components/PhotoModal';
 
 function Main({ match }) {
   const dispatch = useDispatch();
@@ -21,40 +23,13 @@ function Main({ match }) {
   const photos = useSelector(state => state.photos);
   const author = useSelector(state => state.author);
   const collection = useSelector(state => state.collection);
-
+ const showPhotoModal = useSelector(state=>state.photoModal);
+console.log(showPhotoModal);
   const [activeTab, setActiveTab] = useState('1');
   const toggle = tab => {if (activeTab !== tab) setActiveTab(tab);}
 
   const userId = match.params.userId;
   const currentUserUid = user.currentUser !== null ? user.currentUser.uid : null;
-  
-  useEffect(() => {
-    const getUserCollection = async () => {
-      dispatch(getUserCollectionProcess());
-      const userCollection = await categoryApi.getUserCollection(userId);
-      if (userCollection) {
-        dispatch(getUserCollectionSuccess(userCollection));
-      }
-      else {
-        dispatch(getUserCollectionFail());
-      }
-    }
-    getUserCollection();
-
-    const getPhotosByAuthor = async () => {
-      dispatch(getPhotosByAuthorProcess());
-      const data = await photoApi.getByAuthor(userId);
-      if (data) {
-        dispatch(getPhotosByAuthorSuccess(data));
-      }
-      else {
-        dispatch(getPhotosByAuthorFail());
-      }
-    }
-    getPhotosByAuthor();
-
-  }, [dispatch, userId])
-
 
   const handleDeleteConfirm = useCallback((id, title) => {
     dispatch(confirmActions.openModal({ id: id, title: title }));
@@ -65,17 +40,18 @@ function Main({ match }) {
     await photoApi.deletePhoto(id);
   }, [dispatch]);
 
-  if (photos.isLoading || author.isLoading || collection.isLoadUserCollection)
+  if (photos.isLoading || author.isLoading)
     return (<LoadingComponent />)
   else {
 
     //get list of photos belong to login user
     const userPhotos = photos.photobyAuthor.map((photo) => {
-      return (<PhotoCard currentUserUid={currentUserUid} key={photo._id} isDisableHover={photo.author === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
+      let photoAuthor = author.authorList.find(item => item.uid === photo.author);
+      return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photo.author === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
     });
     const likePhotos = photos.photoList.filter(photo => photo.likeCount.findIndex(i => i === userId) !== -1).map((photo) => {
       let photoAuthor = author.authorList.find(item => item.uid === photo.author);
-      return (<PhotoCard authorName={photoAuthor ? photoAuthor.displayName : null} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photo.author === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
+      return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photoAuthor.uid === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
     });
 
     const collectionPhotos = collection.userCollection.map(collect => {
@@ -90,14 +66,14 @@ function Main({ match }) {
             <NavLink
               className={classnames({ active: activeTab === '1' })}
               onClick={() => { toggle('1'); }}>
-              {`Photos (${userPhotos.length})`}
+              <img alt="aphoto" className="xsmall-icon" src={Images.aphoto}/>{`Photos (${userPhotos.length})`}
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
               className={classnames({ active: activeTab === '2' })}
               onClick={() => { toggle('2'); }}>
-              {`Likes (${likePhotos.length})`}
+              <img alt="like" className="xsmall-icon" src={Images.unlike}/>{`Likes (${likePhotos.length})`}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -105,7 +81,7 @@ function Main({ match }) {
               className={classnames({ active: activeTab === '3' })}
               onClick={() => { toggle('3'); }}
             >
-              {`Collections (${collection.userCollection.length})`}
+             <img alt="collection" className="xsmall-icon" src={Images.collection}/> {`Collections (${collection.userCollection.length})`}
             </NavLink>
           </NavItem>
         </Nav>
@@ -118,7 +94,8 @@ function Main({ match }) {
                 <Container fluid="true" className="text-center">
                   <div className="row">
                     <div className="col-md-12">
-                      <PhotoList photoList={userPhotos} userId={userId} />
+                      <PhotoList photoList={userPhotos} />
+                      {showPhotoModal.isOpen?<PhotoModal/>:null}
                     </div>
                   </div>
                 </Container>
@@ -131,7 +108,7 @@ function Main({ match }) {
                 <Container className="text-center">
                   <div className="row">
                     <div className="col-md-12">
-                      <PhotoList photoList={likePhotos} userId={userId} />
+                      <PhotoList photoList={likePhotos} />
                     </div>
                   </div>
                 </Container>
@@ -143,6 +120,7 @@ function Main({ match }) {
             <CollectionLayout collectionPhotos={collectionPhotos} collection={collection} />
           </TabPane>
         </TabContent>
+        
         <ConfirmModal content="You want to delete this photo:" okAction={handleDeleteModal} />
       </div>
     )

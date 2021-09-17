@@ -6,8 +6,8 @@ import SigninModal from 'features/User/component/signin-modal/signinModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth } from '../../firebase/Firebase';
 import SignupModal from 'features/User/component/signup-modal/signUpModal';
-import {signInActions} from '../../utils/ModalSlice/SignInModalSlice';
-import {signUpActions} from '../../utils/ModalSlice/SignUpModalSlice';
+import { signInActions } from '../../utils/ModalSlice/SignInModalSlice';
+import { signUpActions } from '../../utils/ModalSlice/SignUpModalSlice';
 import { addEditActions } from 'utils/ModalSlice/AddEditModalSlice';
 import './Header.scss';
 import AddEditModal from 'features/User/component/AddEditModal/AddEditModal';
@@ -16,17 +16,17 @@ import { getKeyword } from 'features/Search/SearchSlice';
 function Header() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.user.currentUser);
-    
+    const currentUser = useSelector(state => state.user);
+
     const [isOpen, setIsOpen] = useState(false);
     const [inputKeyword, setInputKeyword] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    
-    const openSigninModalBtn = useCallback(()=>dispatch(signInActions.openModal()), [dispatch]);
-    const openSignupModalBtn = useCallback(()=>dispatch(signUpActions.openModal()), [dispatch]);
-    const handleAddPhoto = useCallback(() =>dispatch(addEditActions.openAddModal()), [dispatch]);
-    const handleSearchBtnClick = ()=>{
-        if(inputKeyword.trim() === '')
+
+    const openSigninModalBtn = useCallback(() => dispatch(signInActions.openModal()), [dispatch]);
+    const openSignupModalBtn = useCallback(() => dispatch(signUpActions.openModal()), [dispatch]);
+    const handleAddPhoto = useCallback(() => dispatch(addEditActions.openAddModal()), [dispatch]);
+    const handleSearchBtnClick = () => {
+        if (inputKeyword.trim() === '')
             return;
         dispatch(getKeyword(inputKeyword));
         history.push(`/search/${inputKeyword}`);
@@ -35,15 +35,15 @@ function Header() {
 
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
     const toggle = () => setIsOpen(!isOpen);
-    const handleKeyDown = (e)=>{
-        if(e.key === 'Enter')
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter')
             handleSearchBtnClick();
     }
     return (
         <Navbar color="light" light expand="lg" sticky="top">
             <NavLink to="/photos" className="nav-brand"><img alt="logo" className="header__logo" src={Images.logo} /> <p className="header__text">Photo Gallery</p></NavLink>
             <div className="nav-search">
-                <input onKeyDown={handleKeyDown} value={inputKeyword} onChange={(e)=>{setInputKeyword(e.target.value)}} className="nav-search__input bg-light" type="text" placeholder="Search your favorite photo..." />
+                <input onKeyDown={handleKeyDown} value={inputKeyword} onChange={(e) => { setInputKeyword(e.target.value) }} className="nav-search__input bg-light" type="text" placeholder="Search your favorite photo..." />
                 <button onClick={handleSearchBtnClick} className="nav-search__btn bg-light"><img alt="search" className="nav-search__btn--icon" src={Images.searchIcon} /></button>
             </div>
             <NavbarToggler onClick={toggle} />
@@ -56,17 +56,17 @@ function Header() {
                         <NavLink to="/contact">Contact</NavLink>
                     </NavItem>
                     {
-                        currentUser ?
+                        currentUser.currentUser ?
                             <>
                                 <NavItem> <div className="submitphoto-div" onClick={handleAddPhoto}>Submit a photo</div></NavItem>
-                                <NavItem>    
+                                <NavItem>
                                     <ButtonDropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
                                         <DropdownToggle className="avatar-btn">
-                                            <img alt="avatar" className="avatar-img mid-icon" src={currentUser.photoURL?currentUser.photoURL:Images.user}/>
+                                            <img alt="avatar" className="avatar-img mid-icon" src={currentUser.currentUser.photoURL ? currentUser.currentUser.photoURL : Images.user} />
                                         </DropdownToggle>
                                         <DropdownMenu className="user-menu">
-                                            <DropdownItem><Link className="user-item" to={`/${currentUser.uid}`}>Profile</Link></DropdownItem>
-                                            <DropdownItem><NavLink className="user-item" to={`/edit/${currentUser.uid}`}>Account setting</NavLink></DropdownItem>
+                                            <DropdownItem><Link className="user-item" to={`/${currentUser.currentUser.uid}`}>Profile</Link></DropdownItem>
+                                            <DropdownItem><NavLink className="user-item" to={`/edit/${currentUser.currentUser.uid}`}>Account setting</NavLink></DropdownItem>
                                             <DropdownItem><div className="signout-div" onClick={async () => {
                                                 await auth.signOut();
                                                 history.push('/');
@@ -80,18 +80,18 @@ function Header() {
                             :
                             <>
                                 <NavItem>
-                                <Button outline color="success" onClick={openSignupModalBtn}>Sign Up</Button>
-                                <SignupModal/>
+                                    <Button outline color="success" onClick={openSignupModalBtn}>Sign Up</Button>
+                                    <SignupModal />
                                 </NavItem>
                                 <NavItem>
-                                <Button color="primary" onClick={openSigninModalBtn}>Sign In</Button>
-                                <SigninModal/>
+                                    <Button color="primary" onClick={openSigninModalBtn}>Sign In</Button>
+                                    <SigninModal />
                                 </NavItem>
                             </>
                     }
                 </Nav>
             </Collapse>
-           {currentUser?<AddEditModal />:null}
+            {currentUser.currentUser ? <AddEditModal /> : null}
         </Navbar>
 
     );

@@ -47,7 +47,7 @@ const photo = createSlice({
            // return {...state, photoList: [...state.photoList],photobyAuthor:[...state.photobyAuthor] };
         },
         likePhoto: (state, action)=>{
-            
+            console.log('like');
             const {id, userId} = action.payload;
             const photoIndex = state.photoList.findIndex(photo=> photo._id === id);
             const checkExist = photoIndex!==-1?state.photoList[photoIndex].likeCount.findIndex(item=>item === userId):null;
@@ -62,7 +62,7 @@ const photo = createSlice({
             
         },
         unlikePhoto: (state, action)=>{
-            
+            console.log('unlike');
             const {id, userId} = action.payload;
             const photoIndex = state.photoList.findIndex(photo=> photo._id === id);
             

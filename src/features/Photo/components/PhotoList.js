@@ -5,9 +5,12 @@ import { Container } from 'reactstrap';
 import Masonry from 'react-masonry-css';
 import "./PhotoList.scss";
 import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
+import PhotoModal from './PhotoModal';
 PhotoList.protoTypes = {};
 
 function PhotoList(props){
+ 
+
     const { breakpointColumns, photoList} = props;
     const isLoadingPhotoList = useSelector(state=>state.photos.isLoading);
 //TODO: pass author for banner
@@ -31,6 +34,7 @@ function PhotoList(props){
               </div>
             </div>
           </Container>
+    
         </div>
       
      

@@ -15,11 +15,19 @@ const authorsSlice = createSlice({
         getAuthorsFail: (state, action) =>{
             return {...state, isLoading: false}
         },
+        addAuthor: (state, action) =>{
+            return {authorList:[...state.authorList, action.payload], isLoading: false}
+        },
+        updateAuthor :(state, action)=>{
+            const updateUser = action.payload;
+            const findOld = state.authorList.findIndex(a=>a.uid===updateUser.uid);
+            state.authorList[findOld] = updateUser;
+        }
 
     }
 });
 
 const {reducer,actions} = authorsSlice;
-export const {getAuthorsProcess, getAuthorsSuccess, getAuthorsFail} = actions;
+export const {getAuthorsProcess, getAuthorsSuccess, getAuthorsFail, addAuthor,updateAuthor} = actions;
 
 export default reducer;

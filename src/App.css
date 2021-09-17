@@ -35,6 +35,11 @@
 .small-icon{
   width: 20px !important;
 }
+.small-icon-avatar{
+  width: 20px !important;
+  border-radius: 50%;
+  margin-right: 4px;
+}
 .mid-icon{
   width: 28px !important;
 }

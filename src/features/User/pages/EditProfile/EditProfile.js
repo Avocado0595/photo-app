@@ -1,5 +1,6 @@
 import userApi from 'api/userApi';
 import Images from 'constants/images';
+import { updateAuthor } from 'features/Authors/authorsSlice';
 import { setCurrentUser } from 'features/User/UserSlice';
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,26 +15,27 @@ function EditProfile() {
     const [imgPreview, setImgPreview] = useState(null);
     const [inputName, setInputName] = useState(currentUser.displayName);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setIsSubmitting(true);
         let formData = new FormData();
         formData.append('photoURL', imgPreview);
         formData.append('displayName', inputName);
-        await userApi.updateUser(currentUser.uid,formData);
-        const databaseUser = await userApi.getOne(currentUser.uid);
+
+        const updatedUser = await userApi.updateUser(currentUser.uid,formData);
+        
         setIsSubmitting(false);
-        dispatch(setCurrentUser({googleUser:null, databaseUser:databaseUser}));
+        dispatch(setCurrentUser({googleUser:null, databaseUser:updatedUser.updatedUser}));
+        dispatch(updateAuthor(updatedUser.updatedUser));
         history.push(`/${currentUser.uid}`);
       }
-      const handleCancleClick = ()=>{
-        history.push('/');
-      }
+      const handleCancleClick = ()=>{history.push('/');}
     return (
         
         <Form className="edit-profile-layout" onSubmit={handleSubmit}>
                 <FormGroup className="edit-profile-layout__avatar">
-                  <img alt="avatar" className="edit-profile-layout__avatar--img" src={!imgPreview ? currentUser.photoURL !== '' ? currentUser.photoURL : Images.user : URL.createObjectURL(imgPreview)} />
+                  <img alt="avatar" className="edit-profile-layout__avatar--img" src={!imgPreview ? currentUser.photoURL !== '' &&  currentUser.photoURL !== null? currentUser.photoURL : Images.user : URL.createObjectURL(imgPreview)} />
 
                   <div className="edit-profile-layout__avatar--edit">
                     <label className="edit-profile-layout__avatar--edit--icon" for="avatarPath"><img className="small-icon" alt="edit" src={Images.editAva} /></label>
@@ -64,14 +66,6 @@ function EditProfile() {
 
                     </Col>
                 </FormGroup>
-                {/* <Form>
-<FormGroup>
-        <Label for="exampleFile">File</Label>
-        <Input type="file" name="filePath" id="exampleFile" />
-      </FormGroup>
-      <img src={currentUser.photoURL}/>
-      <Button type="submit">Upload</Button>
-    </Form> */}
             </Form>
            
     );

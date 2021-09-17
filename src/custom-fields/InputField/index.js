@@ -13,30 +13,30 @@ InputField.propTypes = {
     disabled: PropTypes.bool,
 };
 
-InputField.defaultProps={
-    type:'text',
-    label:'',
+InputField.defaultProps = {
+    type: 'text',
+    label: '',
     placeholder: '',
     disabled: false
 }
 
 function InputField(props) {
-    const {form, field,type,label,placeholder ,disabled} = props;
-    const {name, value, onChange, onBlur} = field;
-    const {errors, touched} = form;
+    const { form, field, type, label, placeholder, disabled } = props;
+    const { name, value, onChange, onBlur } = field;
+    const { errors, touched } = form;
     const showErr = errors[name] && touched[name];
     return (
         <FormGroup>
             {label && <Label for={name}>{label}</Label>}
-            <Input name={name} id={name} value={value} 
-            onChange={onChange}
-            onBlur={onBlur}
-            type={type}
-            disabled={disabled}
-            placeholder={placeholder}
-            invalid={showErr}
+            <Input name={name} id={name} value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                type={type}
+                disabled={disabled}
+                placeholder={placeholder}
+                invalid={showErr}
             />
-            <ErrorMessage name={name} component={FormFeedback}/>
+            <ErrorMessage name={name} component={FormFeedback} />
         </FormGroup>
     );
 }

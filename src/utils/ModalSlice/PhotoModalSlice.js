@@ -2,13 +2,14 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const PhotoModalSlice = createSlice({
     name: 'photoModal',
-    initialState: {isOpen: false, PhotoComponent: null},
+    initialState: {isOpen: false, photo: null},
     reducers:{
         openModal: (state, action)=>{
-            return {isOpen: true, PhotoComponent: action.payload}
+            const {photo} = action.payload;
+            return {isOpen: true, photo: photo};
         },
         closeModal: ()=>{
-            return {isOpen: false,  PhotoComponent: null}
+            return {isOpen: false, photo: null};
         }
     }
 });

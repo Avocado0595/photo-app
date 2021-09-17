@@ -34,7 +34,15 @@ const photoApi = {
             return data.photos;
         }
         return null;
-    }
+    },
+    likePhoto: async (params, userUid)=>{
+        const url = `/photo/like/${params}`;
+        await axiosClient.put(url,userUid);
+    },
+    unLikePhoto: async (params, userUid)=>{
+        const url = `/photo/unlike/${params}`;
+        await axiosClient.put(url,userUid);
+    },
 }
 
 export default photoApi;

@@ -9,6 +9,7 @@ import ErrorModalReducer from 'utils/ModalSlice/ErrorModalSlice';
 import ConfirmModalReducer from 'utils/ModalSlice/ConfirmModalSlice';
 import AddEditModalReducer from 'utils/ModalSlice/AddEditModalSlice';
 import SearchReducer from 'features/Search/SearchSlice';
+import photoModalReducer from 'utils/ModalSlice/PhotoModalSlice';
 const rootReducer = {
     photos: photoReducer,
     user: userReducer,
@@ -20,6 +21,7 @@ const rootReducer = {
     AddEditToggle: AddEditModalReducer,
     author: authorReducer,
     search: SearchReducer,
+    photoModal: photoModalReducer
 }
 const store = configureStore({
     reducer:  rootReducer
