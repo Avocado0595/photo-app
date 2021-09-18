@@ -37,3 +37,15 @@
     font-size: 13px !important;
   }
 }
+
+@media (max-width: 420px){
+  .nav-tabs {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 321px){
+  .nav-tabs {
+    font-size: 9px !important;
+  }
+}
