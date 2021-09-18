@@ -69,6 +69,8 @@ $text-color: #767676;
         font-size: 18px;
         flex-grow: 0.5 !important;
         .nav-item{
+            display: flex;
+            align-items: center;
             margin: 0px 8px !important;
             a, div{
                 color: $text-color;
@@ -109,10 +111,15 @@ $text-color: #767676;
 }
 @media (max-width: 377px){
     .navbar{
-    .nav-brand{
-        margin: 0px 0px 0px 8px !important;
-        flex-grow: unset;
+        .navbar-collapse{  
+            .nav-item{
+                font-size: 13px;
+            }
         }
+        .nav-brand{
+            margin: 0px 0px 0px 8px !important;
+            flex-grow: unset;
+            }
     }
     .header__text{
         display: none;

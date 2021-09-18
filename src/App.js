@@ -19,6 +19,7 @@ import authorApi from 'api/authorApi';
 import Search from 'features/Search/Search';
 import EditProfile from 'features/User/pages/EditProfile/EditProfile';
 import userApi from 'api/userApi';
+
 //lazy load photo
 const Photo = lazy(() => import('./features/Photo/index'));
 
@@ -93,6 +94,7 @@ function App() {
           </Switch>
         </BrowserRouter>
       </Suspense>
+      
     </div>
   );
 }

@@ -22,7 +22,6 @@
             margin-right: 4px;
             margin-bottom: 2px;
             width: 14px;
-           
           }
         }
       }
@@ -31,4 +30,10 @@
 
 .text-center{
   padding: 0px !important;
+}
+
+@media (max-width: 390px){
+  .nav-tabs {
+    font-size: 13px !important;
+  }
 }

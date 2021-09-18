@@ -24,8 +24,11 @@ const userApi = {
     updateUser: async (uid,data)=>{
         const url = `/user/${uid}`;
         const updatedUser = await axiosClient.put(url,data);
-        if(!updatedUser)
+        if(!updatedUser.result){
             console.log('fail to add new user');
+            return null;
+            }
+        return updatedUser.data;
     },
 }
 

@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 const config ={
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -16,6 +17,7 @@ const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({prompt: 'select_account'});
 
 export const auth = firebase.auth();
+export const storage = firebase.storage();
 export const singInWithGoogle = ()=> auth.signInWithPopup(provider);
 
 export default firebase;
