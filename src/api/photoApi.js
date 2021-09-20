@@ -37,7 +37,7 @@ const photoApi = {
         const url = `/photo/search/${params}`;
         const data = await axiosClient.get(url);
         if(data.result){
-            return data.photos;
+            return data.data;
         }
         return null;
     },
