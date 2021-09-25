@@ -6,6 +6,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { confirmActions } from 'utils/ModalSlice/ConfirmModalSlice';
+import './Collection.scss';
 
 function Collection(props) {
     const dispatch = useDispatch();
@@ -32,10 +33,12 @@ function Collection(props) {
         return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photo.author === currentUserUid?true:false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
   });
   if(!collection.isLoading){
-    
+
     return (
         <div>
-            <h3>{collectionObj.collectionName}</h3>
+            <h3 className="collection-name">{collectionObj.collectionName}</h3>
+            <p className="collection-name"><i>{photoList.length > 1 ? `${photoList.length} photos`:`${photoList.length} photo` }</i></p>
+            <p className="collection-name"><i>Created on: {collectionObj.createdAt.split('T')[0]}</i></p>
             <PhotoList photoList={photoList} userId={userId}/>
             {showPhotoModal?<PhotoModal/>:null}
         </div>

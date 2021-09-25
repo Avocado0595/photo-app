@@ -26,7 +26,7 @@
         .collection-big-img{
             width: 60%;
             overflow: hidden;
-            margin-right: 2px;
+            margin-right: 1px;
         }
         .collection-small-img{
             width: 40%;
@@ -34,6 +34,7 @@
             flex-direction: column;
             overflow: hidden;
             .img-2, .img-3{
+                background-color: rgba(0, 0, 0, 0.179);
                 height: 50%; 
                 overflow: hidden;
                margin: 0 0 2px 2px;
@@ -42,7 +43,7 @@
     }
 .collection-description{
     display: flex;
-    align-items: center;
+    align-items: baseline;
     .collection-title{
         color: black;
         text-align: left;

@@ -25,7 +25,7 @@ function About() {
             <p>Mọi người tham khảo và đóng góp ý kiến giúp mình nhé!</p>
             <p>Trang web chủ yếu lấy ý tưởng và hình ảnh từ 
                 <a className="link-brand unplash" href="https://unsplash.com"> https://unsplash.com</a></p>
-            <ul> Các công nghệ sử dụng bao gồm:
+            <ul> Trang web này sử dụng:
                 <li>Database: <a className="link-brand mongodb" href="https://www.mongodb.com">Mongodb</a>,
                  <a className="link-brand firebase" href="https://firebase.google.com"> firebase/storage</a> (lưu ảnh avatar)
                  </li>

@@ -1,10 +1,12 @@
 
+
 const { createSlice } = require("@reduxjs/toolkit");
 
 const photo = createSlice({
     name: 'photo',
     initialState: {photoList: [], isLoading: false,photobyAuthor:[], isLoadingPhotoByAuthor:false},
     reducers:{
+       
         getPhotosProcess:(state)=>{
             return {...state,isLoading:true};
         },
@@ -24,8 +26,6 @@ const photo = createSlice({
         getPhotosByAuthorFail:(state)=>{
             return {...state, isLoadingPhotoByAuthor: false};
         },
-
-
         addPhoto: (state, action) =>{
             return {...state, photoList: [...state.photoList, action.payload], photobyAuthor:[...state.photobyAuthor, action.payload]};
         },

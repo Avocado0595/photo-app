@@ -18,14 +18,16 @@ $text-color: #767676;
 .navbar{
     .nav-brand{
         margin-left: 32px;
+        margin-right: 8px;
         display: flex;
         flex-direction: row;
         align-items: center;
         font-family:'Style Script';
         font-size: 28px;
-        flex-grow: 0.3;
+        flex-grow: 0;
         .header__logo{
-            width: 40px;
+            font-size: 26px;
+            width: 31px;
             margin-right: 8px;
         }
         .header__text{
@@ -39,27 +41,38 @@ $text-color: #767676;
         color: $text-color;
     }
     .nav-search{
+        background-color: #eee;
         font-size: 18px;
         border-radius: 20px;
-        padding: 0.4rem 0.4rem 0.4rem 0.8rem;
-        border: solid 2px #ced4da;
+        padding: 0.3rem 0.5rem 0.3rem 0.8rem;
+        border: solid 0.8px transparent;
         display: flex;
         justify-content: space-between;
-        flex-grow: 1;
+        flex-grow: 5 !important;
         margin: 8px 8px;
+        &:hover{
+            border: solid 0.8px #b9b9b9;
+        }
         .nav-search__input{
+            background-color: #eee !important;
+            font-size: 0.9em;
             width: 350px;
             border: none;
             width: auto;
             flex-grow: 1;
             &:focus{
             outline: 0;
+           
             }
+            
+            
         }
         .nav-search__btn{
             border: none;
+            background-color: #eee !important;
             .nav-search__btn--icon{
-                width: 20px;
+                width: 18px;
+                opacity: 0.6;
             }
         }
     }
@@ -67,12 +80,13 @@ $text-color: #767676;
     .navbar-collapse{    
         justify-content: center;
         font-size: 18px;
-        flex-grow: 0.5 !important;
+        flex-grow: 1 !important;
         .nav-item{
             display: flex;
             align-items: center;
             margin: 0px 8px !important;
             a, div{
+                font-size: 1rem;
                 color: $text-color;
                 &:hover{
                     color: black;

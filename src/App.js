@@ -58,6 +58,7 @@ function App() {
     }
 
     const fetchPhotoList = async () => {
+      
       try {
         dispatch(getPhotosProcess());
         const data = await photoApi.getAll();
@@ -68,8 +69,8 @@ function App() {
       }
     };
     const asyncFetchData = async () => {
-      await getAuthorList();
       await fetchPhotoList();
+      await getAuthorList();
     }
     asyncFetchData();
     return () => unSubcribeFromAuth();

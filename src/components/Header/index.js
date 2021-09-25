@@ -79,11 +79,11 @@ function Header() {
                             :
                             <>
                                 <NavItem>
-                                    <Button outline color="success" onClick={openSignupModalBtn}>Sign Up</Button>
+                                    <Button size="sm" outline color="success" onClick={openSignupModalBtn}>Sign Up</Button>
                                     <SignupModal />
                                 </NavItem>
                                 <NavItem>
-                                    <Button color="primary" onClick={openSigninModalBtn}>Sign In</Button>
+                                    <Button size="sm" color="primary" onClick={openSigninModalBtn}>Sign In</Button>
                                     <SigninModal />
                                 </NavItem>
                             </>

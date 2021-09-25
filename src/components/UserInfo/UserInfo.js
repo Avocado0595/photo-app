@@ -10,7 +10,7 @@ function UserInfo(props) {
     const toggle = useCallback(()=>dispatch(photoModalActions.closeModal()),[dispatch]);
     return (
         <Link onClick={toggle} to={userLink}>
-            <img  alt ="avatar" className="small-icon-avatar" src={avatar!==''?avatar:Images.user} />{userName}
+            <img  alt ="avatar" className="small-icon-avatar" src={avatar?avatar:Images.user} />{userName}
         </Link>
     );
 }

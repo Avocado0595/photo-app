@@ -7,13 +7,15 @@ import LoadingComponent from 'components/LoadingComponent/LoadingComponent';
 import { getPhotoFail, getPhotoProcess, getPhotoSuccess } from './SearchSlice';
 import photoApi from 'api/photoApi';
 import './Search.scss';
+import PhotoModal from 'features/Photo/components/PhotoModal';
 
 function Search() {
     const dispatch = useDispatch();
+    const showPhotoModal = useSelector(state=>state.photoModal);
     const searchPhoto = useSelector(state => state.search);
     const author = useSelector(state => state.author);
     const user = useSelector(state => state.user);
-    const currentUserUid = user.currentUser !== null ? user.currentUser.uid : null;
+    const currentUserUid = user.currentUser? user.currentUser.uid:null;
     useEffect(() => {
         const getPhoto = async (keyword) => {
             dispatch(getPhotoProcess);
@@ -23,19 +25,22 @@ function Search() {
         getPhoto(searchPhoto.keyword);
 
     }, [dispatch, searchPhoto.keyword]);
-    if (!author.isLoading && !searchPhoto.isLoading) {
+    if (author.isLoading || searchPhoto.isLoading) {
+        return (<LoadingComponent />);
+    }
+    else {
+       
         const elements = searchPhoto.photos.map((photo) => {
             let photoAuthor = author.authorList.find(item => item.uid === photo.author);
-            return (<PhotoCard currentUserUid={currentUserUid} authorName={photoAuthor ? photoAuthor.displayName : null} key={photo._id} photo={photo} />);
+            return (<PhotoCard currentUserUid={currentUserUid} author={photoAuthor} key={photo._id} photo={photo} />);
         });
         return (
             <div className="container">
                 <h5 className="search-title">Search result for: {searchPhoto.keyword}</h5>
                 {elements.length !== 0 ? <PhotoList photoList={elements} /> : <h5>Sorry! We found nothing!</h5>}
+                {showPhotoModal.isOpen?<PhotoModal/>:null}
             </div>)}
-    else {
-        return (<LoadingComponent />);
-    }
+    
 }
 
 export default Search;

@@ -5,7 +5,7 @@ import {errorActions} from 'utils/ModalSlice/ErrorModalSlice';
 function ErrorModal(props) {
     const dispatch = useDispatch();
     const closeToggle = useCallback(()=>dispatch(errorActions.closeModal()),[dispatch]);
-    const {isOpen} = props;
+    const isOpen = useSelector(state=>state.ErrorToggle.isOpen);
     const errMessage = useSelector(state=>state.ErrorToggle.errMessage);
     return (
            <Modal isOpen={isOpen} toggle={closeToggle}>

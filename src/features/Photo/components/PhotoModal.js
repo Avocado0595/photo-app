@@ -14,15 +14,18 @@ import { likePhoto, unlikePhoto } from '../photoSlice';
 import './PhotoCard.scss';
 import './PhotoModal.scss';
 
+
 function PhotoModal() {
     const dispatch = useDispatch();
+ 
+    
     const collection = useSelector(state => state.collection.userCollection);
     const authorList = useSelector(state => state.author.authorList);
     const modal = useSelector(state => state.photoModal);
     const photoSlice = useSelector(state => state.photos);
     const currentUserUid = useSelector(state => state.user.currentUser?.uid);
     const photo = photoSlice.photoList.find(p => p._id === modal.photo._id);
-    const { photoUrl, _id, title, like, author, collectionId } = photo;
+    const { photoUrl, _id, title, like, author, collectionId, createdAt } = photo;
     const photoAuthor = authorList.find(a => a.uid === author);
     const collectionName = collection.find(c => c.collectionId === collectionId);
     const isLiked = currentUserUid !== null ? like.find(item => item === currentUserUid) : null;
@@ -65,7 +68,7 @@ function PhotoModal() {
         if (!currentUserUid)
             openSinginModal();
     }
-
+    
     return (
         <div>
             <Modal className="photo-modal-layout" isOpen={modal.isOpen} toggle={toggle}>
@@ -86,17 +89,19 @@ function PhotoModal() {
                                 <th className="footer__table--header">Title</th>
                                 <th className="footer__table--header">Collection</th>
                                 <th className="footer__table--header">Likes</th>
+                                <th className="footer__table--header">Published</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td className="footer__table--row">{title}</td>
                                 <td className="footer__table--row">
-                                    <Link to={`${author}/${collectionId}`}>
+                                    <Link to={`/${author}/${collectionId}`}>
                                         {collectionName?.collectionName}
                                     </Link>
                                 </td>
                                 <td className="footer__table--row">{like.length}</td>
+                                <td className="footer__table--row">{createdAt.split('T')[0]}</td>
                             </tr>
                         </tbody>
                     </table>

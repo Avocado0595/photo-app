@@ -9,7 +9,7 @@ function UserProfile(props) {
     return (
         <div className="profile-layout">
             <div className="profile-layout__avatar">
-                <img alt="avatar" className="profile-layout__avatar--img" src={currentAuthor.photoURL!=='' ?currentAuthor.photoURL : Images.user} />
+                <img alt="avatar" className="profile-layout__avatar--img" src={currentAuthor.photoURL ?currentAuthor.photoURL : Images.user} />
             </div>
             <div className="profile-data">
                 <h4>{currentAuthor.displayName}</h4>

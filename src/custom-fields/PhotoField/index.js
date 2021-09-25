@@ -4,11 +4,10 @@ import { Button, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { ErrorMessage } from 'formik';
 import './PhotoField.scss';
 import Images from 'constants/images';
-
+import checkUrl from 'url-exist';
 PhotoField.propTypes = {
     field: PropTypes.object.isRequired,
     form: PropTypes.object.isRequired,
-
     type: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
@@ -23,6 +22,7 @@ PhotoField.defaultProps = {
 }
 
 function PhotoField(props) {
+
     const { form, field, type, label, placeholder, disabled } = props;
     const { name, value, onChange, onBlur } = field;
     const { errors, touched } = form;
@@ -30,10 +30,14 @@ function PhotoField(props) {
     const [imgUrl, setImgUrl] = useState(value);
     const handleError = () => {
         setImgUrl(Images.noPreview);
-
     }
-    const handlePreviewBtn = () => {
-        setImgUrl(value);
+    const handlePreviewBtn = async() => {
+        const isExist = await checkUrl(value);
+        if(isExist)
+            setImgUrl(value);
+        else{
+            setImgUrl('');
+        }
     }
 
     return (
@@ -53,6 +57,7 @@ function PhotoField(props) {
                 <br />
                 <img alt="preview" src={imgUrl} className="preview-img" onError={handleError} />
             </div>
+        
         </FormGroup>
     );
 }

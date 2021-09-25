@@ -46,7 +46,9 @@ function PhotoCard(props) {
             openSinginModal();
     }
     const handleOpenPhotoModel = useCallback(()=>{
+
         if(author){
+            
             dispatch(photoModalActions.openModal({photo:photo}));
         }
     },[author, dispatch, photo]);

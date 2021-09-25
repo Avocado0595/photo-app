@@ -24,8 +24,8 @@ function CollectionLayout(props) {
                                 {collect[0]? <img alt="thumb-1" className="collect-item img-1" src={collect[0].photoUrl}/>:null}
                             </div>
                             <div className = "collection-small-img">
-                                {collect[1]? <img alt="thumb-2" className="collect-item img-2" src={collect[1].photoUrl}/>:null}
-                                {collect[2]? <img alt="thumb-3" className="collect-item img-3" src={collect[2].photoUrl}/>:null}
+                                {collect[1]? <img alt="thumb-2" className="collect-item img-2" src={collect[1].photoUrl}/>:<div className="img-2"></div>}
+                                {collect[2]? <img alt="thumb-3" className="collect-item img-3" src={collect[2].photoUrl}/>:<div className="img-3"></div>}
                             </div>
                         </div>
     
