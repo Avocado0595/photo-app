@@ -4,7 +4,7 @@
     }
     
     .collect-layout{
-        border-radius: 5px;
+        border-radius: 8px;
         height: 280px;
         cursor: pointer;
         position: relative;
@@ -26,7 +26,7 @@
         .collection-big-img{
             width: 60%;
             overflow: hidden;
-            margin-right: 1px;
+            margin-right: 0.6px;
         }
         .collection-small-img{
             width: 40%;
@@ -37,7 +37,7 @@
                 background-color: rgba(0, 0, 0, 0.179);
                 height: 50%; 
                 overflow: hidden;
-               margin: 0 0 2px 2px;
+               margin: 0 0 1.2px 1.2px;
             }
         }
     }
@@ -51,8 +51,8 @@
         font-size: 24px;
         font-weight: 600;
     }
-    .collection-no-photo{
-        color: black;
+    .collection-nof-photo{
+        color: #7b8186;
         font-style: italic;
     }
 }

@@ -40,6 +40,7 @@ const photo = createSlice({
             const photoIndex =  state.photoList.findIndex(photo=> photo._id === editedPhoto._id);
             const photoIndexA = state.photobyAuthor.findIndex(photo=> photo._id === editedPhoto._id);
             if (photoIndexA >=0 && photoIndex >=0){
+                
                 state.photobyAuthor[photoIndexA] = editedPhoto;
                 state.photoList[photoIndex] = editedPhoto;
             }

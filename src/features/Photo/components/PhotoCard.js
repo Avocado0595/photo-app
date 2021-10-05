@@ -8,7 +8,7 @@ import photoApi from 'api/photoApi';
 import './PhotoCard.scss';
 import { photoModalActions } from 'utils/ModalSlice/PhotoModalSlice';
 import UserInfo from 'components/UserInfo/UserInfo';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 
 function PhotoCard(props) {
     const dispatch = useDispatch();
@@ -70,7 +70,7 @@ function PhotoCard(props) {
                             </div>
                         }
                     </div>
-                    <LazyLoad height={200} offset={[-100,100]}><img src={photoUrl} className="img-fluid " alt='alt'/></LazyLoad>
+                    <LazyLoad><img onClick={()=>console.log('img click')} src={photoUrl} className="img-fluid " alt='alt'/></LazyLoad>
                     {!isDisableHover && author ? <div className="modal-group author">
                         <UserInfo userName={author.displayName} avatar={author.photoURL} userLink={`/${photo.author}`}/>
                     </div> : null}

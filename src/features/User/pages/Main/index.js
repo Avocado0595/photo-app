@@ -51,7 +51,6 @@ function Main({ match }) {
       let photoAuthor = author.authorList.find(item => item.uid === photo.author);
       return (<PhotoCard author={photoAuthor} currentUserUid={currentUserUid} key={photo._id} isDisableHover={photoAuthor.uid === currentUserUid ? true : false} photo={photo} handleDeleteConfirm={handleDeleteConfirm} />)
     });
-
     const collectionPhotos = collection.userCollection.map(collect => {
       let collectPhoto = photos.photobyAuthor.filter(photo => photo.collectionId === collect.collectionId);
       return collectPhoto;

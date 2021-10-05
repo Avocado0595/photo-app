@@ -46,7 +46,7 @@ function PhotoForm(props) {
             }
             else{
                 photoApi.updatePhoto(editedPhoto._id,values);
-                dispatch(editPhoto(editedPhoto));  
+                dispatch(editPhoto({...values, _id: editedPhoto._id}));  
             }
 
             toggle();
