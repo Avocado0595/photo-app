@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { ErrorMessage } from 'formik';
+import checkImgURL from 'utils/Tools/checkImgURL';
 import './PhotoField.scss';
 import Images from 'constants/images';
-import checkUrl from 'url-exist';
 PhotoField.propTypes = {
     field: PropTypes.object.isRequired,
     form: PropTypes.object.isRequired,
@@ -24,20 +24,27 @@ PhotoField.defaultProps = {
 function PhotoField(props) {
 
     const { form, field, type, label, placeholder, disabled } = props;
-    const { name, value, onChange, onBlur } = field;
+    const { name, value, onChange, onBlur  } = field;
     const { errors, touched } = form;
     const showErr = errors[name] && touched[name];
+    const [errImgUrl, setErrImgUrl] = useState(false);
     const [imgUrl, setImgUrl] = useState(value);
     const handleError = () => {
         setImgUrl(Images.noPreview);
     }
     const handlePreviewBtn = async() => {
-        const isExist = await checkUrl(value);
-        if(isExist)
+        const isValidImgURL = await checkImgURL(value);
+        if(isValidImgURL)
+        {
             setImgUrl(value);
-        else{
-            setImgUrl('');
+            setErrImgUrl(false);
         }
+            else{
+                setImgUrl('');
+                setErrImgUrl(true);
+                showErr=true;
+            }
+      
     }
 
     return (
@@ -52,6 +59,7 @@ function PhotoField(props) {
                 invalid={showErr}
             />
             <ErrorMessage name={name} component={FormFeedback} />
+            {errImgUrl?<span style={{color: '#dc3545', fontSize: '0.875em'}}>Invalid image url</span>:null}
             <div className="preview-box">
                 <Button onClick={handlePreviewBtn} size="sm" type="button">Preview</Button>
                 <br />

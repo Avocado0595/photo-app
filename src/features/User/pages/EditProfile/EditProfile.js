@@ -80,8 +80,8 @@ function EditProfile() {
 
         </Col>
         <Col sm={8}>
-          <Button className="edit-profile-btn" type="submit">{isSubmitting && <Spinner size="sm" children="" />} Save change</Button>
-          <Button onClick={handleCancleClick} className="edit-profile-btn" color="danger" type="button">Cancel</Button>
+          <Button className="edit-profile-btn" color="primary" type="submit">{isSubmitting && <Spinner size="sm" children="" />} Save change</Button>
+          <Button onClick={handleCancleClick} className="edit-profile-btn" type="button">Cancel</Button>
 
         </Col>
       </FormGroup>

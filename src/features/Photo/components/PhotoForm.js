@@ -4,7 +4,6 @@ import { FormGroup, Button, Spinner } from 'reactstrap';
 import { Formik, Form, FastField } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
-import checkUrl from 'url-exist';
 
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
@@ -15,6 +14,7 @@ import { addCollection } from 'features/Collection/CollectionSlice';
 import { addPhoto, editPhoto } from '../photoSlice';
 import './PhotoForm.scss';
 import ErrorModal from 'features/User/component/errorModal/ErrorModal';
+import checkImgURL from 'utils/Tools/checkImgURL';
 PhotoForm.propTypes = {
     title: PropTypes.string,
     collectionId: PropTypes.string,
@@ -27,29 +27,30 @@ function PhotoForm(props) {
     const currentUserUid = useSelector(state=>state.user.currentUser.uid);
     const collections = useSelector(state=>state.collection.collections);
     const validationSchema = yup.object().shape({
-        title:yup.string().required('This field is required'),
-        collectionId: yup.string().required('This field is required'),
-        photoUrl: yup.string().required('This field is required').test('checkUrl','Invalid Url',(photoUrl)=>{
-                return checkUrl(photoUrl);
-        })
+        title:yup.string().required('This field is required').max(255),
+        collectionId: yup.string().required('This field is required').max(255),
+        photoUrl: yup.string().required('This field is required').max(365)
     })
-    const onSubmit = useCallback((values)=>{
+    const onSubmit = useCallback(async (values)=>{
         try{
-            const isExist = collections.find((item)=>item.value === values.collectionId);
-            if(!isExist){
-                collectionApi.postCollection({collectionId:values.collectionId, collectionName: values.collectionName, author: currentUserUid});
-                dispatch(addCollection({value:values.collectionId, label: values.collectionName}));
-            }
-            if(!isEdit){ 
-                photoApi.postPhoto(values);
-                dispatch(addPhoto(values));
-            }
-            else{
-                photoApi.updatePhoto(editedPhoto._id,values);
-                dispatch(editPhoto({...values, _id: editedPhoto._id}));  
-            }
-
-            toggle();
+            console.log(values);
+            
+            // const isExist = collections.find((item)=>item.value === values.collectionId);
+            // if(!isExist){
+            //     collectionApi.postCollection({collectionId:values.collectionId, collectionName: values.collectionName, author: currentUserUid});
+            //     dispatch(addCollection({value:values.collectionId, label: values.collectionName}));
+            // }
+            // if(!isEdit){ 
+            //     photoApi.postPhoto(values);
+            //     dispatch(addPhoto(values));
+            // }
+            // else{
+            //     photoApi.updatePhoto(editedPhoto._id,values);
+            //     dispatch(editPhoto({...values, _id: editedPhoto._id}));  
+            // }
+            const check = await checkImgURL(values.photoUrl);
+            if(check)
+                {toggle();}
         }
         catch(error){
             console.log('post data failed: ', error);
@@ -61,8 +62,9 @@ function PhotoForm(props) {
                <Formik initialValues={initialValues}
             onSubmit={onSubmit}
             validationSchema={validationSchema}>
+            
             {
-                formikProps =>{
+                (formikProps) =>{
                     const {isSubmitting} = formikProps;
                     return (
                         <Form>

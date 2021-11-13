@@ -33,7 +33,7 @@
       margin: auto auto 2px auto;
       width: 40px;
     }
-    animation: mymove 5s infinite;
+    animation: rotation 5s infinite;
 }
 .unplash-icon{
   background-color: white;
@@ -42,7 +42,7 @@
   width: 20px;
   height: 20px;
 }
-@keyframes mymove {
+@keyframes rotation {
   from {
     -webkit-transform: rotate(0deg);
 }

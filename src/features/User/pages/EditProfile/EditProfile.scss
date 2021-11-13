@@ -50,4 +50,18 @@
 }
 .edit-profile-btn{
     margin-right: 12px;
+    &.save{
+        background: red !important;
+        animation: mymove 5s infinite !important;
+      }
+      
+      @keyframes mymove {
+        from {background-color: red;}
+        to {background-color: blue;}
+      }
+      @-webkit-keyframes mymove {
+        from {background-color: red;}
+        to {background-color: blue;}
+      }
+   
 }
